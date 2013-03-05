@@ -1,0 +1,33 @@
+{
+  "folders":
+  [
+    {
+      "path": ".",
+      "folder_exclude_patterns": [
+        "node_modules",
+        ".sass-cache",
+        ".settings"
+      ],
+      "file_exclude_patterns": [
+        "*.sublime-workspace"
+      ]
+    }
+  ],
+  "settings":
+  {
+    // Ensure the last line of the file ends in a newline when saving.
+    "ensure_newline_at_eof_on_save": true,
+
+    // Columns in which to display vertical rulers.
+    "rulers": [100],
+
+    // Tab 2 space.
+    "tab_size": 2,
+
+    // No tab characters.
+    "translate_tabs_to_spaces": true,
+
+    // Removing trailing white space on save.
+    "trim_trailing_white_space_on_save": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "ember-ui",
+  "description": "UI components for Ember.js",
+  "url": "https://github.com/deanbrowne/ember-ui",
+  "version": "0.0.0",
+  "dependencies": {
+    "ember": "~1.0.0",
+    "compass-twitter-bootstrap": "~2.2.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.1",
+    "chai": "~1.5.0"
+  }
+}

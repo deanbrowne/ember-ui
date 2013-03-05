@@ -1,0 +1,37 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.idea
+.settings
+.tmproj
+nbproject
+Thumbs.db
+*.sublime-workspace
+
+# Sublime config.
+web/.jshintrc
+
+# NPM packages folder.
+node_modules/
+
+# 3rd party libraries.
+components/
+
+# Compiled web resources.
+temp/
+templates.js
+public/
+dist/
