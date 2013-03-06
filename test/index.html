@@ -1,0 +1,53 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ember-UI Tests</title>
+  <link rel="stylesheet" href="vendor/mocha/mocha.css">
+  <style>
+    /* Ember will render into our test page.  Hide the contents so only the tests are visible. */
+    .ember-view {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mocha test framework http://visionmedia.github.com/mocha/ -->
+  <div id="mocha"></div>
+  <script src="vendor/mocha/mocha.js"></script>
+  <script type="text/javascript">
+    mocha.setup({
+      ui: 'bdd',
+      globals: ['$', 'jQuery*', 'LiveReload']
+    });
+  </script>
+
+  <!-- Plugin the Chai assertion framework http://chaijs.com/api/ -->
+  <script src="vendor/chai/chai.js"></script>
+  <script type="text/javascript">
+    expect = chai.expect;
+  </script>
+
+
+  <!-- Source: 3rd party libraries (should match app/index.html) -->
+  <script src="scripts/vendor/jquery/jquery.js"></script>
+  <script src="scripts/vendor/handlebars/handlebars.js"></script>
+  <script src="scripts/vendor/ember/ember.js"></script>
+
+  <!-- Source: Our app to test (should roughly match app/index.html) -->
+
+  <!-- Prevent the Ember Router from changing the URL during testing -->
+  <script type="text/javascript">
+    App.Router.reopen({
+      location: 'none'
+    });
+  </script>
+
+  <!-- Tests -->
+
+  <!-- Run the tests -->
+  <script src="runner/mocha.js"></script>
+
+</body>
+</html>

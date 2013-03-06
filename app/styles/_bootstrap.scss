@@ -1,0 +1,58 @@
+/*
+ * Import and tailor [Twitter Bootstrap](http://twitter.github.com/bootstrap/).
+ * It is actually a port of Bootstrap to SASS called [compass-twitter-bootstrap]
+ * (https://github.com/vwall/compass-twitter-bootstrap).
+ */
+
+//
+// First override variables from compass_twitter_bootstrap/_variables.scss
+//
+
+
+//
+// Import Bootstrap.
+//
+
+// TODO: Whitelist only the parts of Bootstrap we use.  Can shrink down our CSS by 40-80kb.
+
+// Bootstrap + FontAwesome (for icons).
+@import "compass_twitter_bootstrap_awesome";
+
+// Bootstrap Responsive (for browser, tablets, and mobile layouts).
+@import "compass_twitter_bootstrap_responsive";
+
+
+//
+// Override classes.
+//
+
+// Improve dropdowns for mobile by making them more responsive and fade in/out.
+.dropdown-menu {
+  @include transition-duration(200ms);
+
+  // Defaults to display:none which makes it take a second then appear jaggedly.
+  // Instead render immediately and fade in.
+  display: block;
+  opacity: 0;
+  z-index: -1;  // Below content so uses default 'cursor' and browsers optimize rendering
+
+  .divider {
+    // Default in _dropdowns.scss goes to 1px which is invisible with shadows.
+    height: 3px;
+  }
+}
+.open > .dropdown-menu {
+  opacity: 1;
+  z-index: auto;
+}
+
+// Extra class to 'center' the 'brand' text in a 'navbar'.
+.navbar {
+  z-index: 1000;
+
+  .brand.center {
+    // Turn off Bootstrap's left float.
+    float: none;
+    text-align: center;
+  }
+}

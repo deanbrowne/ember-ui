@@ -1,0 +1,1 @@
+../../../../components/handlebars/handlebars.js
