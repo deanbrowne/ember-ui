@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Ember-UI Tests</title>
+  <title>Ember.UI Tests</title>
   <link rel="stylesheet" href="vendor/mocha/mocha.css">
   <style>
     /* Ember will render into our test page.  Hide the contents so only the tests are visible. */
@@ -29,24 +29,24 @@
     expect = chai.expect;
   </script>
 
-
   <!-- Source: 3rd party libraries (should match app/index.html) -->
   <script src="scripts/vendor/jquery/jquery.js"></script>
   <script src="scripts/vendor/handlebars/handlebars.js"></script>
   <script src="scripts/vendor/ember/ember.js"></script>
 
-  <!-- Source: Our app to test (should roughly match app/index.html) -->
-
-  <!-- Prevent the Ember Router from changing the URL during testing -->
-  <script type="text/javascript">
-    App.Router.reopen({
-      location: 'none'
-    });
-  </script>
+  <!-- Source: Our library to test (should roughly match app/index.html) -->
+  <script src="scripts/ui/init.js"></script>
+  <script src="scripts/ui/view/clickable-view.js"></script>
+  <script src="scripts/ui/view/view.js"></script>
 
   <!-- Tests -->
+  <script src="spec/view/test.clickable-view.js"></script>
 
   <!-- Run the tests -->
+  <script type="text/javascript">
+    TestApp = Em.Application.create();
+    TestApp.initialize();
+  </script>
   <script src="runner/mocha.js"></script>
 
 </body>

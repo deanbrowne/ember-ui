@@ -1,8 +1,8 @@
-# Ember-UI
+# Ember.UI
 
 Library of basic views for Ember.js including buttons, lists, navigation elements, etc.
 
-Ember-UI is:
+Ember.UI is:
   * Based on [Bootstrap](http://twitter.github.com/bootstrap/)
   * Designed for smartphones, tablets, and desktop browsers
   * Syntactically simple for readabile templates
