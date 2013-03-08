@@ -6,7 +6,7 @@
   {{#button action="onButtonClick"}}Press Me{{/button}}
 
   // Primary button that calls `this.get('controller').onButtonClick()`
-  {{#button state="error" action="onButtonClick" target="controller"}}Press Me{{/button}}
+  {{#button style="error" action="onButtonClick" target="controller"}}Press Me{{/button}}
   ```
 */
 Ember.UI.Button = Ember.UI.View.extend({
@@ -65,10 +65,19 @@ Ember.UI.Button = Ember.UI.View.extend({
     this.set('classNames', classes);
   }.observes('style')
 
+  // http://twitter.github.com/bootstrap/base-css.html#buttons
+  // TODO: Sizes CSS
+  // TODO: Disabled CSS
+
+  // TODO: "action" property
+  // TODO: "target" property
+
+  // TODO: http://twitter.github.com/bootstrap/javascript.html#buttons
+
 });
 
 
 // Template shorthand:  {{button [options]}}
 Ember.Handlebars.registerHelper('button', function(options) {
-  return EmberHandlebars.ViewHelper.helper(this, 'Ember.UI.Button', options);
+  return Ember.Handlebars.ViewHelper.helper(this, 'Ember.UI.Button', options);
 });
