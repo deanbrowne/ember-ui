@@ -11,18 +11,35 @@
 */
 Ember.UI.Button = Ember.UI.View.extend({
 
+  /**
+    Constructor.
+    @override
+  */
   init: function() {
     this._super();
 
-    // Set `classNames` based on a `style` property assigned in the constructor.
-    this._styleChanged();
+    // Set `classNames` based on a properties assigned in the constructor.
+    this._cssChanged();
   },
 
-  // <button>
+  /**
+    <button> element.
+    @const
+  */
   tagName: 'button',
 
   /**
-    Defaults to Bootstrap's "btn" CSS plus the optional `style` modifier like "btn btn-primary".
+    Properties to surface as <button> attributes.
+  */
+  attributeBindings: ['disabled'],
+
+
+  /**
+    Defaults to Bootstrap's "btn" CSS plus the optional `style`, `size`, `block`, and `disabled`
+    modifiers.  For example it might become the HTML "btn btn-primary".
+
+    Set this explicity to use your own CSS class(es).  Note that if any of the modifier properties
+    are changed it will clobber your change.
 
     @override
   */
@@ -50,10 +67,43 @@ Ember.UI.Button = Ember.UI.View.extend({
   style: null,
 
   /**
-    Change the CSS classes when the `style` changes.
+    Optional button modifier to make a button bigger or smaller.  See [Bootstrap's button styles for
+    details](http://twitter.github.com/bootstrap/base-css.html#buttons).  Values can be:
+      * "large" - Bigger possibly for hero text like "Sign Up"
+      * `null` - Default size for almost everything
+      * "small" - Small buttons are useful when grouped
+      * "mini" - Very small buttons might go in a footer so as not to call attention to them
+
+    @type {?String}
+  */
+  size: null,
+
+  /**
+    Optional button modifier to span the full width of the parent.  Often used with `size` "large".
+    See [Bootstrap's button styles for details]
+    (http://twitter.github.com/bootstrap/base-css.html#buttons).
+
+    @type {!Boolean}
+  */
+  block: false,
+
+  /**
+    Disables a button from being pressable.  Making `true` will add the disabled attribute to the
+    button like:
+    ```html
+    <button disabled="disabled">
+    ```
+
+    @type {!Boolean}
+  */
+  disabled: false,
+
+
+  /**
+    Change the CSS classes whenever a button modifier property changes.
     @private
   */
-  _styleChanged: function() {
+  _cssChanged: function() {
     var classes = ['btn'];
 
     var style = this.get('style');
@@ -62,12 +112,25 @@ Ember.UI.Button = Ember.UI.View.extend({
       classes.pushObject(stateClass);
     }
 
-    this.set('classNames', classes);
-  }.observes('style')
+    var size = this.get('size');
+    if (size) {
+      var sizeClass = 'btn-' + size;
+      classes.pushObject(sizeClass);
+    }
 
-  // http://twitter.github.com/bootstrap/base-css.html#buttons
-  // TODO: Sizes CSS
-  // TODO: Disabled CSS
+    var block = this.get('block');
+    if (block) {
+      classes.pushObject('btn-block');
+    }
+
+    var disabled = this.get('disabled');
+    if (disabled) {
+      classes.pushObject('disabled');
+    }
+
+    this.set('classNames', classes);
+  }.observes('style', 'size', 'block', 'disabled')
+
 
   // TODO: "action" property
   // TODO: "target" property

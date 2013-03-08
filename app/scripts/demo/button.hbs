@@ -1,4 +1,13 @@
-<h4>Button Styles</h4>
+<h1>Button</h1>
+<p>
+  <code>Ember.UI.Button</code> represents a HTML <code>&lt;button&gt;</code>
+  <pre>&#123;&#123;#button&#125;&#125;Click Me&#123;&#123;/button&#125;&#125;</pre>
+</p>
+
+<hr />
+<h3>Appearance</h3>
+
+<h4>Styles</h4>
 <div class="well">
   {{#button }}default{{/button}}
   {{#button style="primary"}}primary{{/button}}
@@ -7,3 +16,33 @@
   {{#button style="warning"}}warning{{/button}}
   {{#button style="danger"}}danger{{/button}}
 </div>
+<p>Use the <code>style</code> property to get a different look than the default button.</p>
+<pre>&#123;&#123;#button style="primary"&#125;&#125;Submit&#123;&#123;/button&#125;&#125;</pre>
+<br/>
+
+<h4>Sizes</h4>
+<div class="well">
+  {{#button size="large"}}large{{/button}}
+  {{#button }}default{{/button}}
+  {{#button size="small"}}small{{/button}}
+  {{#button size="mini"}}mini{{/button}}
+</div>
+<p>Use the <code>size</code> property to make the button bigger or smaller.</p>
+<pre>&#123;&#123;#button size="large"&#125;&#125;Sign Up&#123;&#123;/button&#125;&#125;</pre>
+
+<h5>Block</h5>
+<div class="well">
+  {{#button block="true"}}Block{{/button}}
+</div>
+<p>Set <code>block</code> to <code>true</code> to have the button's width match its parent's.</p>
+<pre>&#123;&#123;#button block="true" style="danger" size="large"&#125;&#125;Logout&#123;&#123;/button&#125;&#125;</pre>
+<br/>
+
+<h4>Disabled</h4>
+<div class="well">
+  {{#button disabled="true"}}Can't click me{{/button}}
+</div>
+<p>Setting <code>disabled</code> to <code>true</code> both changes the appearance and prevents the
+  button from being clicked.</p>
+<pre>&#123;&#123;#button disabled="true" style="primary"&#125;&#125;Sign In&#123;&#123;/button&#125;&#125;</pre>
+<br/>
