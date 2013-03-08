@@ -20,16 +20,16 @@ module.exports = function( grunt ) {
       compile: {
         files: {
           // Destination for compiled .js files.
-          'app/scripts/views/templates.js': [
+          'app/scripts/demo/templates.js': [
             // Input templates.
-            'app/scripts/views/**/*.hbs',
-            'app/scripts/views/**/*.handlebars'
+            'app/scripts/demo/**/*.hbs',
+            'app/scripts/demo/**/*.handlebars'
           ]
         },
         options: {
-          // Remove the "app/scripts/views/" prefix from template names.
+          // Remove the "app/scripts/demo/" prefix from template names.
           templateName: function(sourceFile) {
-            return sourceFile.replace(/app\/scripts\/views\//, '');
+            return sourceFile.replace(/app\/scripts\/demo\//, '');
           }
         }
       }
@@ -108,8 +108,8 @@ module.exports = function( grunt ) {
       },
       handlebars: {  // db- Compile Handlebar files whenever they change
         files: [
-          'app/scripts/views/**/*.hbs',
-          'app/scripts/views/**/*.handlebars'
+          'app/scripts/demo/**/*.hbs',
+          'app/scripts/demo/**/*.handlebars'
         ],
         tasks: 'ember_templates reload'
       }
@@ -121,7 +121,7 @@ module.exports = function( grunt ) {
       files: [
         'app/scripts/**/*.js',
         '!app/scripts/vendor/**/*.js',
-        '!app/scripts/view/templates.js',
+        '!app/scripts/demo/templates.js',
         'spec/**/*.js'
       ]
     },

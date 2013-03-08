@@ -1,8 +1,7 @@
 {
-  "name": "ember-ui",
+  "name": "Ember.UI",
   "description": "UI components for Ember.js",
   "version": "0.0.0",
-  "homepage": "https://github.com/deanbrowne/ember-ui",
   "repository": {
     "type": "git",
     "url": "https://github.com/deanbrowne/ember-ui"
@@ -13,6 +12,6 @@
   "dependencies": {
   },
   "devDependencies": {
-    "grunt-ember-templates": "0.3.x"
+    "grunt-ember-templates": "~0.3.2"
   }
 }
