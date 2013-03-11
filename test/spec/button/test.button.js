@@ -1,6 +1,14 @@
 describe('Ember.UI.Button', function() {
 
   describe('"class" attribute (CSS)', function() {
+    var button;
+
+    afterEach(function() {
+      if (button) {
+        button.remove();
+      }
+    });
+
     it('defaults to "btn"', function() {
       var button = Ember.UI.Button.create();
       var classes = button.get('classNames');
@@ -9,19 +17,31 @@ describe('Ember.UI.Button', function() {
 
     describe('"style" property modifier', function() {
       it('modifies the class attribute', function() {
-        var button = Ember.UI.Button.create({
-          style: 'primary'
+        Ember.run(function() {
+          button = Ember.UI.Button.create({
+            style: 'primary'
+          });
+          button.append();
         });
+
         var classes = button.get('classNames');
         expect(classes).to.include('btn');
         expect(classes).to.include('btn-primary');
       });
 
       it('changes the class attribute when updated', function() {
-        var button = Ember.UI.Button.create({
-          style: 'primary'
+        Ember.run(function() {
+          button = Ember.UI.Button.create({
+            style: 'primary'
+          });
+          button.append();
         });
-        button.set('style', 'error');
+
+        Ember.run(function() {
+          button.set('style', 'error');
+          button.rerender();
+        });
+
         var classes = button.get('classNames');
         expect(classes).to.include('btn');
         expect(classes).to.include('btn-error');
@@ -31,20 +51,29 @@ describe('Ember.UI.Button', function() {
 
     describe('"size" property modifier', function() {
       it('changes the class attribute when updated', function() {
-        // Start with a large button.
-        var button = Ember.UI.Button.create({
-          size: 'large'
+        Ember.run(function() {
+          // Start with a large button.
+          button = Ember.UI.Button.create({
+            size: 'large'
+          });
+          button.append();
         });
         var classes = button.get('classNames');
         expect(classes).to.include('btn-large');
 
         // Adding a different modifier shouldn't modify the size.
-        button.set('style', 'error');
+        Ember.run(function() {
+          button.set('style', 'error');
+          button.rerender();
+        });
         classes = button.get('classNames');
         expect(classes).to.include('btn-large');
 
         // Remove the size.
-        button.set('size', null);
+        Ember.run(function() {
+          button.set('size', null);
+          button.rerender();
+        });
         classes = button.get('classNames');
         expect(classes).not.to.include('btn-large');
       });
@@ -53,15 +82,21 @@ describe('Ember.UI.Button', function() {
     describe('"block" property modifier', function() {
       it('changes the class attribute when updated', function() {
         // Start with a large button.
-        var button = Ember.UI.Button.create({
-          style: 'primary',
-          size: 'large'
+        Ember.run(function() {
+          button = Ember.UI.Button.create({
+            style: 'primary',
+            size: 'large'
+          });
+          button.append();
         });
         var classes = button.get('classNames');
         expect(classes).not.to.include('btn-block');
 
         // Make it a block button.
-        button.set('block', true);
+        Ember.run(function() {
+          button.set('block', true);
+          button.rerender();
+        });
         classes = button.get('classNames');
         expect(classes).to.include('btn');
         expect(classes).to.include('btn-primary');
@@ -73,12 +108,18 @@ describe('Ember.UI.Button', function() {
     describe('"disabled" property modifier', function() {
       it('changes the class attribute when updated', function() {
         // Start with a normal button.
-        var button = Ember.UI.Button.create();
+        Ember.run(function() {
+          button = Ember.UI.Button.create();
+          button.append();
+        });
         var classes = button.get('classNames');
         expect(classes).not.to.include('disabled');
 
         // Disable it.
-        button.set('disabled', true);
+        Ember.run(function() {
+          button.set('disabled', true);
+          button.rerender();
+        });
         classes = button.get('classNames');
         expect(classes).to.include('disabled');
       });

@@ -1,56 +1,89 @@
 /**
-  Standard HTML <button> element.  Eliminates the 300ms click delay introduced on touch devices.
+  Standard HTML <button> element.  Styled with [Bootstrap]
+  (http://twitter.github.com/bootstrap/base-css.html#buttons).  Eliminates the 300ms click delay on
+  touch devices.
 
   ```handlebars
-  // Simple button that calls `this.get('route').onButtonClick()`
+  // Simple button that calls `this.get('target').onButtonClick()`
   {{#button action="onButtonClick"}}Press Me{{/button}}
 
   // Primary button that calls `this.get('controller').onButtonClick()`
-  {{#button style="error" action="onButtonClick" target="controller"}}Press Me{{/button}}
+  {{#button style="default" action="onButtonClick" target="controller"}}Press Me{{/button}}
   ```
+
+  @class Button
+  @namespace Ember.UI
+  @extends Ember.UI.View
 */
 Ember.UI.Button = Ember.UI.View.extend({
 
   /**
-    Constructor.
-    @override
-  */
-  init: function() {
-    this._super();
-
-    // Set `classNames` based on a properties assigned in the constructor.
-    this._cssChanged();
-  },
-
-  /**
     <button> element.
-    @const
+    @property tagName
+    @override
+    @final
   */
   tagName: 'button',
 
   /**
     Properties to surface as <button> attributes.
+    @property attributeBindings
+    @override
   */
-  attributeBindings: ['disabled'],
+  attributeBindings: ['type', 'disabled', 'tabindex'],
+
+  /**
+    <button type="submit"> is default.  Can change to 'button' or 'reset'.
+
+    @property type
+    @type {!String}
+  */
+  type: 'submit',
+
+  /**
+    Disables a button from being pressable.  Making `true` will add the disabled attribute to the
+    button like:
+    ```html
+    <button disabled="disabled">
+    ```
+
+    @property disabled
+    @type {!Boolean}
+  */
+  disabled: false,
 
 
   /**
-    Defaults to Bootstrap's "btn" CSS plus the optional `style`, `size`, `block`, and `disabled`
-    modifiers.  For example it might become the HTML "btn btn-primary".
+    Defaults to Bootstrap's "btn" CSS class.  Override to add your own CSS class and/or remove the
+    Bootstrap class.
 
-    Set this explicity to use your own CSS class(es).  Note that if any of the modifier properties
-    are changed it will clobber your change.
+    Optional modifier classes are added through `classNameBindings`.  Any changes to the
+    `style`, `size`, `block`, and/or `disabled` properties will append to the "btn" class.
 
+    @property classNames
+    @type {Array[String]}
     @override
   */
   classNames: ['btn'],
 
   /**
-    <button type="submit"> is default.  Can change to 'button' or 'reset'.
+    Changing the `style`, `size`, `block`, and/or `disabled` properties will append CSS classes.
 
-    @type {!String}
+    @property classNameBindings
+    @type {Array[String]}
+    @override
   */
-  type: 'submit',
+  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled'],
+
+  /**
+    @param {!String} propertyName is the property to convert into a Bootstrap CSS class name.
+    @return {?String} Bootstrap CSS class name; `null` if the property was not set.
+    @private
+  */
+  _bootstrapClass: function(propertyName) {
+    var propertyValue = this.get(propertyName);
+    return propertyValue ? 'btn-' + propertyValue : null;
+  },
 
   /**
     Optional button modifier.  See [Bootstrap's button styles for details]
@@ -62,9 +95,15 @@ Ember.UI.Button = Ember.UI.View.extend({
       * "warning" - Indicates caution should be taken with this action
       * "danger" - Indicates a dangerous or potentially negative action
 
-    @type {?String}
+    @property style
+    @type {String}
   */
   style: null,
+
+  _styleCss: function() {
+    var propertyValue = this.get('style');
+    return propertyValue ? 'btn-' + propertyValue : null;
+  }.property('style'),
 
   /**
     Optional button modifier to make a button bigger or smaller.  See [Bootstrap's button styles for
@@ -74,73 +113,35 @@ Ember.UI.Button = Ember.UI.View.extend({
       * "small" - Small buttons are useful when grouped
       * "mini" - Very small buttons might go in a footer so as not to call attention to them
 
-    @type {?String}
+    @property size
+    @type {String}
   */
   size: null,
+
+  _sizeCss: function() {
+    var propertyValue = this.get('size');
+    return propertyValue ? 'btn-' + propertyValue : null;
+  }.property('size'),
 
   /**
     Optional button modifier to span the full width of the parent.  Often used with `size` "large".
     See [Bootstrap's button styles for details]
     (http://twitter.github.com/bootstrap/base-css.html#buttons).
 
+    @property block
     @type {!Boolean}
   */
   block: false,
 
-  /**
-    Disables a button from being pressable.  Making `true` will add the disabled attribute to the
-    button like:
-    ```html
-    <button disabled="disabled">
-    ```
-
-    @type {!Boolean}
-  */
-  disabled: false,
-
-
-  /**
-    Change the CSS classes whenever a button modifier property changes.
-    @private
-  */
-  _cssChanged: function() {
-    var classes = ['btn'];
-
-    var style = this.get('style');
-    if (style) {
-      var stateClass = 'btn-' + style;
-      classes.pushObject(stateClass);
-    }
-
-    var size = this.get('size');
-    if (size) {
-      var sizeClass = 'btn-' + size;
-      classes.pushObject(sizeClass);
-    }
-
-    var block = this.get('block');
-    if (block) {
-      classes.pushObject('btn-block');
-    }
-
-    var disabled = this.get('disabled');
-    if (disabled) {
-      classes.pushObject('disabled');
-    }
-
-    this.set('classNames', classes);
-  }.observes('style', 'size', 'block', 'disabled')
-
-
-  // TODO: "action" property
-  // TODO: "target" property
-
-  // TODO: http://twitter.github.com/bootstrap/javascript.html#buttons
+  _blockCss: function() {
+    var propertyValue = this.get('block');
+    return propertyValue ? 'btn-block' : null;
+  }.property('block')
 
 });
 
 
-// Template shorthand:  {{button [options]}}
+// Template shorthand:  {{#button [options]}}Text{{/button}}
 Ember.Handlebars.registerHelper('button', function(options) {
   return Ember.Handlebars.ViewHelper.helper(this, 'Ember.UI.Button', options);
 });
