@@ -3,13 +3,17 @@
 Library of basic views for Ember.js including buttons, lists, navigation elements, etc.
 
 Ember.UI is:
-  * Based on [Bootstrap](http://twitter.github.com/bootstrap/)
-  * Designed for smartphones, tablets, and desktop browsers
+  * Designed with apps in mind
+  * Built for smartphones, tablets, and desktop browsers
+  * Styled by [Bootstrap](http://twitter.github.com/bootstrap/)
   * Syntactically simple for readabile templates
+    ```handlebars
+    {{#button action="login"}}Log In{{/button}}
+    ```
 
-```handlebars
-{{button action="foo"}}
-```
+Ember is seriously useful for anything that is long running, requires user interaction, or involves
+lots of logic.  It for apps.  Ember.UI is therefore modeled after [iOS's UIKit](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/Introduction/Introduction.html) and
+really designed to work on iOS and Android just as well as it does on desktop.
 
 
 ## Setup
@@ -33,7 +37,7 @@ with `sudo npm install -g bower`.)
     bower install
     ```
 
-## Development
+## Contributing
 
 ### Developing
 
@@ -55,9 +59,11 @@ yeoman server:test
 ### Submitting
 
 1. First run the tests to make sure everything passes.
+
     ```console
     yeoman test
     ```
+
 2. Then [rebase](https://help.github.com/articles/interactive-rebase) to have a clean history.
 3. Finally [submit a pull request](https://help.github.com/articles/using-pull-requests).
 
@@ -72,13 +78,15 @@ the library better for you and me!
 
 ### Attributions
 
+(Run `bower list` to see versions and complete details.)
+
   * Toolchain
     * [Grunt](http://gruntjs.com/) - Building
     * [Yeoman](http://yeoman.io/) - Scaffolding
     * [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) - Testing
     * [Bower](http://twitter.github.com/bower/) - Package manager
     * [SASS](http://sass-lang.com/) and [Compass](http://compass-style.org/reference/compass/) - CSS
-  * Libraries (run `bower list` to see complete details and versions)
+  * Libraries
     * [Ember](http://emberjs.com/)
     * [Bootstrap](http://twitter.github.com/bootstrap/) - CSS
     * [FontAwesome](http://fortawesome.github.com/Font-Awesome/) - Icons
