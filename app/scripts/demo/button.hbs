@@ -1,8 +1,30 @@
-<h1>Button</h1>
+<h1>Ember.UI.Button</h1>
+<code>&#123;&#123;#button&#125;&#125;Click Me&#123;&#123;/button&#125;&#125;</code>
+<p>&nbsp;
+
 <p>
-  <code>Ember.UI.Button</code> represents a HTML <code>&lt;button&gt;</code>
-  <pre>&#123;&#123;#button&#125;&#125;Click Me&#123;&#123;/button&#125;&#125;</pre>
+  A <code>&lt;button&gt;</code> element with added juice:
+  <ul>
+    <li>Visually styled with <a href="http://twitter.github.com/bootstrap/base-css.html#buttons">
+        Bootstrap</a>
+    <li>Eliminates the 300ms click delay introduced by touch devices (i.e. snappy as a native app on
+        mobile)
+  </ul>
 </p>
+
+
+<hr />
+<h3>Actions</h3>
+<div class="well">
+  {{#button action="alert" target="controller" style="danger"}}Alert{{/button}}
+</div>
+
+<p>Use the <code>action</code> property to execute a method by that name.</p>
+<pre>&#123;&#123;#button action="alert"&#125;&#125;Alert&#123;&#123;/button&#125;&#125;</pre>
+
+<p>Use the <code>target</code> property to trigger the action method on a different object.</p>
+<pre>&#123;&#123;#button action="calculateTax" target="App.utils"&#125;&#125;Update Amount&#123;&#123;/button&#125;&#125;</pre>
+
 
 <hr />
 <h3>Appearance</h3>
@@ -40,7 +62,7 @@
 
 <h4>Disabled</h4>
 <div class="well">
-  {{#button disabled="true"}}Can't click me{{/button}}
+  {{#button disabled="true" action="alert" target="controller"}}Can't click me{{/button}}
 </div>
 <p>Setting <code>disabled</code> to <code>true</code> both changes the appearance and prevents the
   button from being clicked.</p>
