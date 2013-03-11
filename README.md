@@ -5,15 +5,16 @@ Library of basic views for Ember.js including buttons, lists, navigation element
 Ember.UI is:
   * Designed with apps in mind
   * Built for smartphones, tablets, and desktop browsers
-  * Styled by [Bootstrap](http://twitter.github.com/bootstrap/)
+  * Styled using [Bootstrap](http://twitter.github.com/bootstrap/)
   * Syntactically simple for readabile templates
+
     ```handlebars
     {{#button action="login"}}Log In{{/button}}
     ```
 
-Ember is seriously useful for anything that is long running, requires user interaction, or involves
-lots of logic.  It for apps.  Ember.UI is therefore modeled after [iOS's UIKit](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/Introduction/Introduction.html) and
-really designed to work on iOS and Android just as well as it does on desktop.
+Ember is seriously useful for apps.  That is anything that is long running, requires user interaction, or involves
+lots of logic.  Ember.UI is therefore modeled after [iOS's UIKit](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/Introduction/Introduction.html)
+and is really designed to work on iOS and Android just as well as it does on desktop.
 
 
 ## Setup
