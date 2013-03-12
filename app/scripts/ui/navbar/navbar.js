@@ -13,19 +13,10 @@
   @extends Ember.UI.View
 */
 Ember.UI.Navbar = Ember.UI.View.extend({
-  layout: Ember.Handlebars.compile(
-    '<nav class="navbar">' +
-      '<div class="navbar-inner">' +
-        '<div class="brand">' +
-          '{{yield}}' +
-        '</div>' +
-      '</div>' +
-    '</nav>' +
-    '<div class="navbar-spacer"></div>')
+  layoutName: 'navbar/navbar-layout'
 
   // TODO: CSS to center text, pull buttons left and right
   // TODO: navbar-spacer CSS
-  // TODO: Configure Gruntfile.js to compile this template separately from demo
 
 });
 

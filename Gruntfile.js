@@ -19,17 +19,18 @@ module.exports = function( grunt ) {
     ember_templates: {
       compile: {
         files: {
-          // Destination for compiled .js files.
-          'app/scripts/demo/templates.js': [
-            // Input templates.
-            'app/scripts/demo/**/*.hbs',
-            'app/scripts/demo/**/*.handlebars'
-          ]
+          'app/scripts/ui/templates.js': 'app/scripts/ui/**/*.hbs',
+          'app/scripts/demo/templates.js': 'app/scripts/demo/**/*.hbs'
         },
         options: {
-          // Remove the "app/scripts/demo/" prefix from template names.
           templateName: function(sourceFile) {
-            return sourceFile.replace(/app\/scripts\/demo\//, '');
+            if (sourceFile.match(/app\/scripts\/demo\//)) {
+              // Remove the "app/scripts/demo/" prefix from demo template names.
+              return sourceFile.replace(/app\/scripts\/demo\//, '');
+            } else {
+              // Remove the "app/scripts/ui/" prefix from library template names.
+              return sourceFile.replace(/app\/scripts\/ui\//, '');
+            }
           }
         }
       }
@@ -108,8 +109,8 @@ module.exports = function( grunt ) {
       },
       handlebars: {  // db- Compile Handlebar files whenever they change
         files: [
-          'app/scripts/demo/**/*.hbs',
-          'app/scripts/demo/**/*.handlebars'
+          'app/scripts/ui/**/*.hbs',
+          'app/scripts/demo/**/*.hbs'
         ],
         tasks: 'ember_templates reload'
       }
