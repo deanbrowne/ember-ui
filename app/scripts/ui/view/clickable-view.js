@@ -130,8 +130,10 @@ if ('ontouchstart' in window) {
       @private
     */
     _cancelClickTracking: function() {
-      $('body').off('touchemove');
-      this._isClickTracking = false;
+      if (this._isClickTracking) {
+        $('body').off('touchmove');
+        this._isClickTracking = false;
+      }
     },
 
     /**
