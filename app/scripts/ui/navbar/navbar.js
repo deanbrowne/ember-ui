@@ -14,10 +14,6 @@
 */
 Ember.UI.Navbar = Ember.UI.View.extend({
   layoutName: 'navbar/navbar-layout'
-
-  // TODO: CSS to center text, pull buttons left and right
-  // TODO: navbar-spacer CSS
-
 });
 
 

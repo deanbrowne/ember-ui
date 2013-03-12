@@ -48,7 +48,7 @@
 
 // Extra class to 'center' the 'brand' text in a 'navbar'.
 .navbar {
-  z-index: 1000;
+  z-index: $zindexFixedNavbar;
 
   .brand.center {
     // Turn off Bootstrap's left float.

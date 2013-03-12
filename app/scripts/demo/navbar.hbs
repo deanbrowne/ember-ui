@@ -16,16 +16,23 @@
 <hr />
 <h3>Appearance</h3>
 
-<h4>Styles</h4>
+<h4>Top</h4>
 <div class="well" style="padding:0; height:100px; background:#FFF">
-  {{#navbar }}Title{{/navbar}}
+  {{#navbar}}
+    <span class="pull-left">{{#button}}Back{{/button}}</span>
+    <span class="pull-right">{{#button}}Edit{{/button}}</span>
+    <span class="brand center">Title</span>
+  {{/navbar}}
+  Content
 </div>
-<p>Use the <code>style</code> property to get a different look than the default button.</p>
-<pre>&#123;&#123;#navbar style="primary"&#125;&#125;Title&#123;&#123;/navbar&#125;&#125;</pre>
+<p>
+  The most common pattern is a top navigation bar with an optional title, left-side, and right-side
+  buttons.  In this scenario it is important to specify the left and right buttons before the
+  centered brand title text.
+</p>
+<pre>&#123;&#123;#navbar&#125;&#125;
+  &lt;span class="pull-left"&gt;&#123;&#123;#button&#125;&#125;Back&#123;&#123;/button&#125;&#125;&lt;/span&gt;
+  &lt;span class="pull-right"&gt;&#123;&#123;#button&#125;&#125;Edit&#123;&#123;/button&#125;&#125;&lt;/span&gt;
+  &lt;span class="brand center"&gt;Title&lt;/span&gt;
+&#123;&#123;/navbar&#125;&#125;</pre>
 <br/>
-
-
-{{! TOP
-  BACK BUTTON
-BOTTOM (hide/appear)
- }}
