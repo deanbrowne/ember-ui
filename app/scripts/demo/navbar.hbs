@@ -8,7 +8,7 @@
 </div>
 <p>
   A navigation bar runs the full width of its parent and is usually fixed to the top.  The typical
-  navigation bar has a "back" button on the left, a title in the center, and menu buttons on the
+  navigation bar has a "back button" on the left, a title in the center, and menu buttons on the
   right.  Although it may be used at the bottom to show additional context-sensitive buttons.
 </p>
 
@@ -19,20 +19,31 @@
 <h4>Top</h4>
 <div class="well" style="padding:0; height:100px; background:#FFF">
   {{#navbar}}
-    <span class="pull-left">{{#button}}Back{{/button}}</span>
+    <span class="pull-left">{{#back-button}}Back{{/back-button}}</span>
     <span class="pull-right">{{#button}}Edit{{/button}}</span>
     <span class="brand center">Title</span>
   {{/navbar}}
-  Content
 </div>
 <p>
-  The most common pattern is a top navigation bar with an optional title, left-side, and right-side
-  buttons.  In this scenario it is important to specify the left and right buttons before the
+  The most common pattern is a top navigation bar with an optional title, left-side back button, and
+  right-side buttons.  In this scenario it is important to specify the left and right buttons before
+  the
   centered brand title text.
 </p>
 <pre>&#123;&#123;#navbar&#125;&#125;
-  &lt;span class="pull-left"&gt;&#123;&#123;#button&#125;&#125;Back&#123;&#123;/button&#125;&#125;&lt;/span&gt;
+  &lt;span class="pull-left"&gt;&#123;&#123;#back-button&#125;&#125;Back&#123;&#123;/back-button&#125;&#125;&lt;/span&gt;
   &lt;span class="pull-right"&gt;&#123;&#123;#button&#125;&#125;Edit&#123;&#123;/button&#125;&#125;&lt;/span&gt;
   &lt;span class="brand center"&gt;Title&lt;/span&gt;
 &#123;&#123;/navbar&#125;&#125;</pre>
 <br/>
+
+<h5>Back Button</h5>
+<p>
+  The left side of the navbar often uses the special <code>Ember.UI.BackButton</code>.  By default
+  it acts like the browser back button; only visible if there is browser history.  To always return
+  to a specific page set the <code>parentRoute</code> property.
+</p>
+<div class="well">
+  {{#back-button parentRoute="root"}}Home{{/back-button}}
+</div>
+<pre>&#123;&#123;#back-button parentRoute="root"&#125;&#125;Home&#123;&#123;/back-button&#125;&#125;</pre>
