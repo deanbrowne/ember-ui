@@ -13,11 +13,30 @@
 
 <hr />
 <h3>Usage</h3>
+
+<h4>Binding</h4>
 <div class="well" style="background: #FFF">
-  {{progress-bar id="progressBar" percentComplete="60"}}
+  {{progress-bar percentBinding="controllerProgress"}}
 </div>
-<pre>&#123;&#123;progress-bar percentComplete="60"&#125;&#125;</pre>
-<pre>progressBar.set('precentComplete', downloaded / totalSize);</pre>
+<p>
+  Most commonly a progress bar is bound to a controller property that will increase from 0 to 100.
+  Use <code>percentBinding</code> with the name of the controller property.  If that property isn't
+  initially set, is not a number, etc. it will be 0.  Decimals are OK.
+</p>
+<pre>&#123;&#123;progress-bar percentBinding="propertyName"&#125;&#125;</pre>
+<br/>
+
+<h4>Explicit</h4>
+<div class="well" style="background: #FFF">
+  {{progress-bar id="progressBar" percent="60"}}
+</div>
+<p>
+  It is also possible to explicitly set the progress bar's completion percentage to anything
+  between 0 and 100.
+</p>
+<pre>&#123;&#123;progress-bar percent="60"&#125;&#125;</pre>
+<pre>progressBar.set('percent', downloaded / totalSize);</pre>
+
 
 <hr />
 <h3>Appearance</h3>
@@ -27,19 +46,19 @@
   <table width="100%">
     <tr>
       <td width="70" style="vertical-align: top">default</td>
-      <td style="valign: top">{{progress-bar percentComplete="20"}}</td>
+      <td style="valign: top">{{progress-bar percent="20"}}</td>
     </tr>
     <tr>
       <td style="vertical-align: top">success</td>
-      <td>{{progress-bar style="success" percentComplete="40"}}</td>
+      <td>{{progress-bar style="success" percent="40"}}</td>
     </tr>
     <tr>
       <td style="vertical-align: top">warning</td>
-      <td>{{progress-bar style="warning" percentComplete="60"}}</td>
+      <td>{{progress-bar style="warning" percent="60"}}</td>
     </tr>
     <tr>
       <td style="vertical-align: top">danger</td>
-      <td>{{progress-bar style="danger" percentComplete="80"}}</td>
+      <td>{{progress-bar style="danger" percent="80"}}</td>
     </tr>
   </table>
 </div>
@@ -52,7 +71,7 @@
   <table width="100%">
     <tr>
       <td width="70" style="vertical-align: top">animate</td>
-      <td style="valign: top">{{progress-bar animate="true" percentComplete="20"}}</td>
+      <td style="valign: top">{{progress-bar animate="true" percent="20"}}</td>
     </tr>
   </table>
 </div>

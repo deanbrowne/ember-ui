@@ -4,11 +4,15 @@
   Styled using [Bootstrap](http://twitter.github.com/bootstrap/components.html#progress).
 
   ```handlebars
-  {{progress-bar precentComplete="60"}}
+  <!-- Bind to a property that goes between 0 and 100 on the controller by its name -->
+  {{progress-bar percentBinding="propertyName"}}
+
+  <!-- Set explicitly to 60% -->
+  {{progress-bar percent="60"}}
   ```
 
   ```javascript
-  progressBar.set('precentComplete', downloaded / totalSize);
+  progressBar.set('percent', downloaded / totalSize);
   ```
 
   @class ProgressBar
@@ -19,12 +23,12 @@ Ember.UI.ProgressBar = Ember.UI.View.extend({
   templateName: 'progress/progress-bar',
 
   /**
-    A value between [0, 100].
+    A value between [0, 100].  For example "60" would fill the left 60% of the progress bar.
 
     @property percent
     @type {Number}
   */
-  percentComplete: 0,
+  percent: 0,
 
   /**
     Computed value for the `style` attribute like "width: 60%".
@@ -32,10 +36,17 @@ Ember.UI.ProgressBar = Ember.UI.View.extend({
     @property width
   */
   _width: function() {
-    var percent = this.get('percentComplete');
+    var percent = this.get('percent');
+    percent = Math.round(percent);
+    percent = Math.max(percent, 0);
+    percent = Math.min(percent, 100);
+    if (isNaN(percent)) {
+      percent = 0;
+    }
+
     var css = 'width:' + percent + '%';
     return css;
-  }.property('percentComplete'),
+  }.property('percent'),
 
 
   /**
