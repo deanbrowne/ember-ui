@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h1>
+    Ember.UI.ProgressBar
+    <small>
+      <strong>&#123;&#123;progress-bar&#125;&#125;</strong>
+    </small>
+  </h1>
+</div>
+<p>
+  Horizontal progress bar that fills from left-to-right.
+</p>
+
+
+<hr />
+<h3>Usage</h3>
+<div class="well" style="background: #FFF">
+  {{progress-bar id="progressBar" percentComplete="60"}}
+</div>
+<pre>&#123;&#123;progress-bar percentComplete="60"&#125;&#125;</pre>
+<pre>progressBar.set('precentComplete', downloaded / totalSize);</pre>
+
+<hr />
+<h3>Appearance</h3>
+
+<h4>Styles</h4>
+<div class="well" style="background: #FFF">
+  <table width="100%">
+    <tr>
+      <td width="70" style="vertical-align: top">default</td>
+      <td style="valign: top">{{progress-bar percentComplete="20"}}</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">success</td>
+      <td>{{progress-bar style="success" percentComplete="40"}}</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">warning</td>
+      <td>{{progress-bar style="warning" percentComplete="60"}}</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">danger</td>
+      <td>{{progress-bar style="danger" percentComplete="80"}}</td>
+    </tr>
+  </table>
+</div>
+<p>Use the <code>style</code> property to change the color.</p>
+<pre>&#123;&#123;progress-bar style="success"&#125;&#125;</pre>
+<br/>
+
+<h4>Animated</h4>
+<div class="well" style="background: #FFF">
+  <table width="100%">
+    <tr>
+      <td width="70" style="vertical-align: top">animate</td>
+      <td style="valign: top">{{progress-bar animate="true" percentComplete="20"}}</td>
+    </tr>
+  </table>
+</div>
+<p>
+  Use the <code>animate</code> property to add motion to the progress bar.  Great for letting the
+  user know the app hasn't frozen.
+</p>
+<pre>&#123;&#123;progress-bar animate="true"&#125;&#125;</pre>
