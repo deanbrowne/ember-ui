@@ -43,6 +43,7 @@ Ember.UI.Button = Ember.UI.View.extend({
   /**
     Disables a button from being pressable.  Making `true` will add the disabled attribute to the
     button like:
+
     ```html
     <button disabled="disabled">
     ```
@@ -73,7 +74,7 @@ Ember.UI.Button = Ember.UI.View.extend({
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled'],
+  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled', '_activeCss'],
 
   /**
     @param {!String} propertyName is the property to convert into a Bootstrap CSS class name.
@@ -136,7 +137,35 @@ Ember.UI.Button = Ember.UI.View.extend({
   _blockCss: function() {
     var propertyValue = this.get('block');
     return propertyValue ? 'btn-block' : null;
-  }.property('block')
+  }.property('block'),
+
+  /**
+    Set to `true` to make the button appear depressed.  Used to let the user make binary on/off
+    choices typically in the context of a `ButtonGroup`.
+
+    ```handlebars
+    <!-- Set this.get('controller.showAll') to `true` or `false` -->
+    {{#button activeBinding="showAll"}}All{{/button}}
+    ```
+
+    @property active
+    @type {!Boolean}
+  */
+  active: false,
+
+  _activeCss: function() {
+    var propertyValue = this.get('active');
+    return propertyValue ? 'active' : null;
+  }.property('active'),
+
+  /**
+    Toggles the `active` state of the current button.  Toggling is automatically handled by
+    surrounding one or more buttons in a `ButtonGroup`.
+  */
+  toggle: function() {
+    var active = this.get('active');
+    this.set('active', !active);
+  }
 
 });
 
