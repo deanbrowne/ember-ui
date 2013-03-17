@@ -74,7 +74,7 @@ Ember.UI.Button = Ember.UI.View.extend({
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled', '_activeCss'],
+  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled', '_selectedCss'],
 
   /**
     @param {!String} propertyName is the property to convert into a Bootstrap CSS class name.
@@ -143,28 +143,23 @@ Ember.UI.Button = Ember.UI.View.extend({
     Set to `true` to make the button appear depressed.  Used to let the user make binary on/off
     choices typically in the context of a `ButtonGroup`.
 
-    ```handlebars
-    <!-- Set this.get('controller.showAll') to `true` or `false` -->
-    {{#button activeBinding="showAll"}}All{{/button}}
-    ```
-
-    @property active
+    @property selected
     @type {!Boolean}
   */
-  active: false,
+  selected: false,
 
-  _activeCss: function() {
-    var propertyValue = this.get('active');
+  _selectedCss: function() {
+    var propertyValue = this.get('selected');
     return propertyValue ? 'active' : null;
-  }.property('active'),
+  }.property('selected'),
 
   /**
-    Toggles the `active` state of the current button.  Toggling is automatically handled by
+    Toggles the `selected` state of the current button.  Toggling is automatically handled by
     surrounding one or more buttons in a `ButtonGroup`.
   */
   toggle: function() {
-    var active = this.get('active');
-    this.set('active', !active);
+    var selected = this.get('selected');
+    this.set('selected', !selected);
   }
 
 });

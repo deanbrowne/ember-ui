@@ -1,18 +1,18 @@
 describe('Ember.UI.Button', function() {
 
   describe('toggle()', function() {
-    it('flips the `active` state', function() {
+    it('flips the `selected` state', function() {
       var button = Ember.UI.Button.create();
-      var isActive = button.get('active');
-      expect(isActive).to.equal(false);
+      var isSelected = button.get('selected');
+      expect(isSelected).to.equal(false);
 
       button.toggle();
-      isActive = button.get('active');
-      expect(isActive).to.equal(true);
+      isSelected = button.get('selected');
+      expect(isSelected).to.equal(true);
 
       button.toggle();
-      isActive = button.get('active');
-      expect(isActive).to.equal(false);
+      isSelected = button.get('selected');
+      expect(isSelected).to.equal(false);
     });
   });
 
@@ -121,7 +121,7 @@ describe('Ember.UI.Button', function() {
       });
     });
 
-    describe('"active" property modifier', function() {
+    describe('"selected" property modifier', function() {
       it('changes the class attribute when updated', function() {
         // Start with a large button.
         Ember.run(function() {

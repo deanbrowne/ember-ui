@@ -21,11 +21,11 @@ Ember.UI.ClickableView = Ember.View.extend(Ember.TargetActionSupport, {
 
   /**
     Stop events from bubbling up.  Common usage is to prevent buttons from submitting forms by
-    making sure this is `false`.
+    setting this to `false`.
 
     @property propagateEvents
   */
-  propagateEvents: false,
+  propagateEvents: true,
 
   /**
     Overrides `TargetActionSupport`'s `targetObject` computed

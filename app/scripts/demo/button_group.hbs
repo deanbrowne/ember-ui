@@ -1,0 +1,81 @@
+<div class="page-header">
+  <h1>Button Groups</h1>
+  <p>
+    Grouped buttons used to make selections.  The <code>RadioButtonGroup</code> always has exactly
+    one button selected.  The <code>CheckboxButtonGroup</code> has zero or more.
+  </p>
+</div>
+
+
+<h3>
+  Ember.UI.RadioButtonGroup
+  <small>
+    <strong>&#123;&#123;#radio-button-group&#125;&#125;</strong>...<strong>&#123;&#123;/radio-button-group&#125;&#125;</strong>
+  </small>
+</h3>
+<p>
+  Groups multiple buttons together with exactly one button always selected (radio buttons).
+  Pressing a button selects it and unselects the previous one.
+</p>
+<div class="well">
+  {{#radio-button-group selectedBinding="radioChoice"}}
+    {{#button value="This" style="primary"}}This{{/button}}
+    {{#button value="That" style="primary"}}That{{/button}}
+    {{#button value="The Other" style="primary"}}The Other{{/button}}
+  {{/radio-button-group}}
+
+  <br />&nbsp;
+  <p class="text-success"><strong> {{radioChoice}} </strong></p>
+</div>
+<p>
+  Set the <code>selectedBinding</code> attribute to a property's name on the controller to bind its
+  value to selected button's <code>value</code>.  In the example the controller's
+  <code>radioChoice</code> is initially "That" so the middle button is selected when the page is
+  rendered.
+</p>
+<pre>&#123;&#123;#radio-button-group selectedBinding="radioChoice"&#125;&#125;
+  &#123;&#123;#button value="This" style="primary"&#125;&#125;This&#123;&#123;/button&#125;&#125;
+  &#123;&#123;#button value="That" style="primary"&#125;&#125;This&#123;&#123;/button&#125;&#125;
+  &#123;&#123;#button value="The Other" style="primary"&#125;&#125;The Other&#123;&#123;/button&#125;&#125;
+&#123;&#123;/radio-button-group&#125;&#125;</pre>
+<pre>// In the controller.
+Example.Controller = Ember.Controller.extend({
+  radioChoice: 'That'
+});</pre>
+
+
+<hr/>
+<h3>
+  Ember.UI.CheckboxButtonGroup
+  <small>
+    <strong>&#123;&#123;#checkbox-button-group&#125;&#125;</strong>...<strong>&#123;&#123;/checkbox-button-group&#125;&#125;</strong>
+  </small>
+</h3>
+<p>
+  Groups buttons together where zero or more can be selected.
+</p>
+<div class="well">
+  {{#checkbox-button-group radio="false" selectedBinding="checkboxChoices"}}
+    {{#button value="Democrats" style="info"}}Democrats{{/button}}
+    {{#button value="Indepedents" style="warning"}}Indepedents{{/button}}
+    {{#button value="Republicans" style="danger"}}Republicans{{/button}}
+  {{/checkbox-button-group}}
+
+  <br />&nbsp;
+  <p class="text-success"><strong> [{{checkboxChoices}}] </strong></p>
+</div>
+<p>
+  Set the <code>selectedBinding</code> attribute to a property's name on the controller to bind its
+  value to an array of the selected buttons' <code>value</code>s.  If no buttons are selected
+  it will be a zero-length array.
+</p>
+<pre>&#123;&#123;#checkbox-button-group selectedBinding="checkboxChoices"&#125;&#125;
+  &#123;&#123;#button value="Democrats" style="info"&#125;&#125;Democrats&#123;&#123;/button&#125;&#125;
+  &#123;&#123;#button value="Indepedents" style="warning"&#125;&#125;Indepedents&#123;&#123;/button&#125;&#125;
+  &#123;&#123;#button value="Republicans" style="danger"&#125;&#125;Republicans&#123;&#123;/button&#125;&#125;
+&#123;&#123;/checkbox-button-group&#125;&#125;</pre>
+<pre>// In the controller.
+Example.Controller = Ember.Controller.extend({
+  checkboxChoices: []  // To initially select everything use ['Democrats','Indepedents','Republicans']
+});</pre>
+
