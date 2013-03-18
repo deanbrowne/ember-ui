@@ -50,7 +50,7 @@ Ember.UI.ProgressBar = Ember.UI.View.extend({
 
 
   /**
-    Optional style modifier controlling the progress bar color.  See [Bootstrap's progress bar
+    Optional appearance modifier controlling the progress bar color.  See [Bootstrap's progress bar
     styles for details] (http://twitter.github.com/bootstrap/components.html#progress).  Besides the
     default `null`, values can be:
       * "success" - Green progress bar
@@ -58,15 +58,15 @@ Ember.UI.ProgressBar = Ember.UI.View.extend({
       * "danger" - Red progress bar
       * `null` - The default blue progress bar
 
-    @property style
+    @property appearance
     @type {String}
   */
-  style: null,
+  appearance: null,
 
-  _styleCss: function() {
-    var propertyValue = this.get('style');
+  _appearanceCss: function() {
+    var propertyValue = this.get('appearance');
     return propertyValue ? 'bar-' + propertyValue : null;
-  }.property('style'),
+  }.property('appearance'),
 
   /**
     Optional style modifier to add movement to the progress bar.  Helps the user know the app isn't

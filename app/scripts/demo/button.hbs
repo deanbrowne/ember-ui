@@ -20,7 +20,7 @@
 <hr />
 <h3>Actions</h3>
 <div class="well">
-  {{#button action="incrementClickCount" target="controller" style="danger"}}Alert{{/button}}
+  {{#button action="incrementClickCount" target="controller" appearance="danger"}}Alert{{/button}}
 
   <br />&nbsp;
   <p class="text-success"> Clicks: <strong> {{clickCount}} </strong></p>
@@ -36,17 +36,17 @@
 <hr />
 <h3>Appearance</h3>
 
-<h4>Styles</h4>
+<h4>Color</h4>
 <div class="well">
   {{#button }}default{{/button}}
-  {{#button style="primary"}}primary{{/button}}
-  {{#button style="info"}}info{{/button}}
-  {{#button style="success"}}success{{/button}}
-  {{#button style="warning"}}warning{{/button}}
-  {{#button style="danger"}}danger{{/button}}
+  {{#button appearance="primary"}}primary{{/button}}
+  {{#button appearance="info"}}info{{/button}}
+  {{#button appearance="success"}}success{{/button}}
+  {{#button appearance="warning"}}warning{{/button}}
+  {{#button appearance="danger"}}danger{{/button}}
 </div>
-<p>Use the <code>style</code> property to get a different look than the default button.</p>
-<pre>&#123;&#123;#button style="primary"&#125;&#125;Submit&#123;&#123;/button&#125;&#125;</pre>
+<p>Use the <code>appearance</code> property to get a different look than the default button.</p>
+<pre>&#123;&#123;#button appearance="primary"&#125;&#125;Submit&#123;&#123;/button&#125;&#125;</pre>
 <br/>
 
 <h4>Sizes</h4>
@@ -64,7 +64,7 @@
   {{#button block="true"}}Block{{/button}}
 </div>
 <p>Set <code>block</code> to <code>true</code> to have the button's width match its parent's.</p>
-<pre>&#123;&#123;#button block="true" style="danger" size="large"&#125;&#125;Logout&#123;&#123;/button&#125;&#125;</pre>
+<pre>&#123;&#123;#button block="true" appearance="danger" size="large"&#125;&#125;Logout&#123;&#123;/button&#125;&#125;</pre>
 <br/>
 
 <h4>Disabled</h4>
@@ -73,5 +73,5 @@
 </div>
 <p>Setting <code>disabled</code> to <code>true</code> both changes the appearance and prevents the
   button from being clicked.</p>
-<pre>&#123;&#123;#button disabled="true" style="primary"&#125;&#125;Sign In&#123;&#123;/button&#125;&#125;</pre>
+<pre>&#123;&#123;#button disabled="true" appearance="primary"&#125;&#125;Sign In&#123;&#123;/button&#125;&#125;</pre>
 <br/>

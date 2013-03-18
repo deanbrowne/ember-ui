@@ -8,7 +8,7 @@
   {{#button action="onButtonClick"}}Press Me{{/button}}
 
   // Primary button that calls `this.get('controller').onButtonClick()`
-  {{#button style="default" action="onButtonClick" target="controller"}}Press Me{{/button}}
+  {{#button appearance="default" action="onButtonClick" target="controller"}}Press Me{{/button}}
   ```
 
   @class Button
@@ -58,9 +58,6 @@ Ember.UI.Button = Ember.UI.View.extend({
     Defaults to Bootstrap's "btn" CSS class.  Override to add your own CSS class and/or remove the
     Bootstrap class.
 
-    Optional modifier classes are added through `classNameBindings`.  Any changes to the
-    `style`, `size`, `block`, and/or `disabled` properties will append to the "btn" class.
-
     @property classNames
     @type {Array[String]}
     @override
@@ -68,13 +65,13 @@ Ember.UI.Button = Ember.UI.View.extend({
   classNames: ['btn'],
 
   /**
-    Changing the `style`, `size`, `block`, and/or `disabled` properties will append CSS classes.
+    Changing the `appearance`, `size`, `block`, or `disabled` properties will append CSS classes.
 
     @property classNameBindings
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled', '_selectedCss'],
+  classNameBindings: ['_appearanceCss', '_sizeCss', '_blockCss', 'disabled', '_selectedCss'],
 
   /**
     @param {!String} propertyName is the property to convert into a Bootstrap CSS class name.
@@ -91,20 +88,20 @@ Ember.UI.Button = Ember.UI.View.extend({
     (http://twitter.github.com/bootstrap/base-css.html#buttons).  Besides the default `null`, values
     can be:
       * "primary" - Provides extra visual weight and identifies the primary action in a button set
-      * "info" - Used as an alternative to the default styles
+      * "info" - Used as an alternative to the default
       * "success" - Indicates a successful or positive action
       * "warning" - Indicates caution should be taken with this action
       * "danger" - Indicates a dangerous or potentially negative action
 
-    @property style
+    @property appearance
     @type {String}
   */
-  style: null,
+  appearance: null,
 
-  _styleCss: function() {
-    var propertyValue = this.get('style');
+  _appearanceCss: function() {
+    var propertyValue = this.get('appearance');
     return propertyValue ? 'btn-' + propertyValue : null;
-  }.property('style'),
+  }.property('appearance'),
 
   /**
     Optional button modifier to make a button bigger or smaller.  See [Bootstrap's button styles for

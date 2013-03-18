@@ -31,11 +31,11 @@ describe('Ember.UI.Button', function() {
       expect(classes).to.include('btn');
     });
 
-    describe('"style" property modifier', function() {
+    describe('"appearance" property modifier', function() {
       it('modifies the class attribute', function() {
         Ember.run(function() {
           button = Ember.UI.Button.create({
-            style: 'primary'
+            appearance: 'primary'
           });
           button.append();
         });
@@ -48,13 +48,13 @@ describe('Ember.UI.Button', function() {
       it('changes the class attribute when updated', function() {
         Ember.run(function() {
           button = Ember.UI.Button.create({
-            style: 'primary'
+            appearance: 'primary'
           });
           button.append();
         });
 
         Ember.run(function() {
-          button.set('style', 'error');
+          button.set('appearance', 'error');
           button.rerender();
         });
 
@@ -79,7 +79,7 @@ describe('Ember.UI.Button', function() {
 
         // Adding a different modifier shouldn't modify the size.
         Ember.run(function() {
-          button.set('style', 'error');
+          button.set('appearance', 'error');
           button.rerender();
         });
         classes = button.get('classNames');
@@ -100,7 +100,7 @@ describe('Ember.UI.Button', function() {
         // Start with a large button.
         Ember.run(function() {
           button = Ember.UI.Button.create({
-            style: 'primary',
+            appearance: 'primary',
             size: 'large'
           });
           button.append();

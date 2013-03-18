@@ -33,7 +33,7 @@ Ember.UI.BackButton = Ember.UI.Button.extend({
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_styleCss', '_sizeCss', '_blockCss', 'disabled', '_backButtonCss'],
+  classNameBindings: ['_appearanceCss', '_sizeCss', '_blockCss', 'disabled', '_backButtonCss'],
 
   /**
     Is the "btn-back" CSS classname if the required CSS properties are available to style a back
