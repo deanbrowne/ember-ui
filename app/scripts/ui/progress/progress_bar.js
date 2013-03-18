@@ -20,7 +20,7 @@
   @extends Ember.UI.View
 */
 Ember.UI.ProgressBar = Ember.UI.View.extend({
-  templateName: 'progress/progress-bar',
+  templateName: 'progress/progressBar',
 
   /**
     A value between [0, 100].  For example "60" would fill the left 60% of the progress bar.

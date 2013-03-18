@@ -13,7 +13,7 @@
   @extends Ember.UI.View
 */
 Ember.UI.Navbar = Ember.UI.View.extend({
-  layoutName: 'navbar/navbar-layout'
+  layoutName: 'navbar/navbarLayout'
 });
 
 
