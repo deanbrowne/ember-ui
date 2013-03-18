@@ -31,13 +31,15 @@ Ember.UI.CheckboxButtonGroup = Ember.UI.View.extend({
   classNames: 'btn-group',
 
   /**
-    The value attribute of the currently selected button(s) in the group.  If it is a radio button
-    group this will always return a string of the one selected button's value.  If it is a checkbox
-    button group it returns an array of strings for each selected button's value; and if no buttons
-    are selected it returns a zero-length array.
+    An array of the value attributes for the selected buttons in the group.  This is always bound to
+    a controller property.
+
+    ```handlebars
+    {{#checkbox-button-group selectedBinding="controllerPropertyName"}}
+    ```
 
     @property selected
-    @type {String|Array[String]}
+    @type {Array[String]}
   */
   selected: [],
 
@@ -74,7 +76,7 @@ Ember.UI.CheckboxButtonGroup = Ember.UI.View.extend({
   /**
     Initialize which child buttons has been marked selected.  Typically `selected` is bound to an
     array controller property whose elements should equal the `value`s of the initially selected
-    buttons. Alternatively the template defining this view can have set the `value` on the buttons.
+    buttons.
 
     @override
   */
@@ -85,23 +87,9 @@ Ember.UI.CheckboxButtonGroup = Ember.UI.View.extend({
       // Initially selected button specified by the controller.
       this.forEachChildView(function(button) {
         var val = button.get('value');
-        var isSelected = controllerSelected.indexOf(val);
+        var isSelected = controllerSelected.indexOf(val) >= 0;
         button.set('selected', isSelected);
       });
-    } else {
-      // The initially selected button specified by the template.
-      var values = [];
-
-      this.forEachChildView(function(button) {
-        var isSelectedButton = button.get('selected');
-
-        if (isSelectedButton) {
-          var val = button.get('value');
-          values.pushObject(val);
-        }
-      });
-
-      this.set('selected', values);
     }
   }
 

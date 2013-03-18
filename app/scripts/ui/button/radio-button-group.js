@@ -32,13 +32,15 @@ Ember.UI.RadioButtonGroup = Ember.UI.View.extend({
   classNames: 'btn-group',
 
   /**
-    The value attribute of the currently selected button(s) in the group.  If it is a radio button
-    group this will always return a string of the one selected button's value.  If it is a checkbox
-    button group it returns an array of strings for each selected button's value; and if no buttons
-    are selected it returns a zero-length array.
+    The value attribute of the selected button in the group.  This is always bound to a controller
+    property.
+
+    ```handlebars
+    {{#radio-button-group selectedBinding="controllerPropertyName"}}
+    ```
 
     @property selected
-    @type {String|Array[String]}
+    @type {String}
   */
   selected: null,
 
@@ -67,7 +69,6 @@ Ember.UI.RadioButtonGroup = Ember.UI.View.extend({
   /**
     Initialize which child button has been marked selected.  Typically `selected` is bound to a
     controller property and it should equal the `value` of the initially selected button.
-    Alternatively the template defining this view can have set the `value` on one of the buttons.
 
     @override
   */
@@ -80,17 +81,6 @@ Ember.UI.RadioButtonGroup = Ember.UI.View.extend({
         var val = button.get('value');
         if (val === controllerSelected) {
           button.set('selected', true);
-          return;  // Short circuit looping through the remaining buttons.
-        }
-      });
-    } else {
-      // The initially selected button specified by the template.
-      this.forEachChildView(function(button) {
-        var isSelectedButton = button.get('selected');
-
-        if (isSelectedButton) {
-          var val = button.get('value');
-          this.set('selected', val);
           return;  // Short circuit looping through the remaining buttons.
         }
       });
