@@ -11,9 +11,21 @@
 @import "compass/css3/transition";           // @include transition()
 
 
+// GPU animations on iOS.
+@mixin hardware-accelerate-animations() {
+  // iOS 6.0+  http://indiegamr.com/ios6-html-hardware-acceleration-changes-and-how-to-fix-them/
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+
 /*
   Configurable appearance.
 */
+
+// How long the slide animation takes.
+$uiPanelAnimationDuration: 200ms;
+$uiPanelAnimationTiming: ease;
 
 // Drop shadow inset to give the illusion of a revealed panel having a lower Z-index.
 $uiPanelRevealShadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
@@ -27,34 +39,35 @@ $uiPanelPushShadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 */
 .ui-panel {
   // Size and positioning.
-  position: relative;
+  position: fixed;  // Scroll independently of other panels
   top: 0;
   left: 0;
   margin: 0;
   min-height: 100%;
-  width: 100%;  // Default.  Typically overriden by Panel's `width` property.
+
+  // Avoid accidentally floating elements over panels.
+  z-index: $zindexFixedNavbar + 1;
 
   // Appearance.
-  background-color: $bodyBackground;
+  background-color: $wellBackground;
 
   // Animations to slide panel.
-  @include transition-duration(200ms);
-  @include transition-timing-function(ease-in);
+  @include hardware-accelerate-animations();
+  @include transition-duration($uiPanelAnimationDuration);
+  @include transition-timing-function($uiPanelAnimationTiming);
   @include transition-property(transform);
 
   /**
-    For panels with `style` of "reveal".  Other contents slides out of the way to reveal this panel
-    beneath it (as if it had a lower Z-order).
+    For panels with `depth` of "below".
   */
-  .ui-panel-reveal {
+  .ui-panel-below {
     @include box-shadow($uiPanelRevealShadow);
   }
 
   /**
-    For panels with `style` of "overlay".  This panel pushes other content away and appears above
-    it (as if it had a higher Z-order).
+    For panels with `depth` of "above".
   */
-  .ui-panel-push {
+  .ui-panel-above {
     @include box-shadow($uiPanelPushShadow);
   }
 }
