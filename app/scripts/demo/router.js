@@ -6,4 +6,5 @@ Demo.Router.map(function() {
   this.route('buttonGroup');
   this.route('navbar');
   this.route('progress');
+  this.route('panel');
 });

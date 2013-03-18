@@ -1,0 +1,60 @@
+/*
+  Ember.UI.Panel
+*/
+
+// Colors.
+@import "compass_twitter_bootstrap/variables";
+
+// http://compass-style.org/index/mixins/
+@import "compass";
+@import "compass/css3/box-shadow";           // @include box-shadow()
+@import "compass/css3/transition";           // @include transition()
+
+
+/*
+  Configurable appearance.
+*/
+
+// Drop shadow inset to give the illusion of a revealed panel having a lower Z-index.
+$uiPanelRevealShadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+
+// Drop shadow to give the illusion of a pushed panel having a higher Z-index.
+$uiPanelPushShadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+
+
+/**
+  Main CSS for a panel.
+*/
+.ui-panel {
+  // Size and positioning.
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+  min-height: 100%;
+  width: 100%;  // Default.  Typically overriden by Panel's `width` property.
+
+  // Appearance.
+  background-color: $bodyBackground;
+
+  // Animations to slide panel.
+  @include transition-duration(200ms);
+  @include transition-timing-function(ease-in);
+  @include transition-property(transform);
+
+  /**
+    For panels with `style` of "reveal".  Other contents slides out of the way to reveal this panel
+    beneath it (as if it had a lower Z-order).
+  */
+  .ui-panel-reveal {
+    @include box-shadow($uiPanelRevealShadow);
+  }
+
+  /**
+    For panels with `style` of "overlay".  This panel pushes other content away and appears above
+    it (as if it had a higher Z-order).
+  */
+  .ui-panel-push {
+    @include box-shadow($uiPanelPushShadow);
+  }
+}
