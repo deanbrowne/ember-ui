@@ -20,7 +20,10 @@
 <hr />
 <h3>Actions</h3>
 <div class="well">
-  {{#button action="alert" target="controller" style="danger"}}Alert{{/button}}
+  {{#button action="incrementClickCount" target="controller" style="danger"}}Alert{{/button}}
+
+  <br />&nbsp;
+  <p class="text-success"> Clicks: <strong> {{clickCount}} </strong></p>
 </div>
 
 <p>Use the <code>action</code> property to execute a method by that name.</p>

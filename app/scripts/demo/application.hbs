@@ -1,15 +1,13 @@
 {{! Nav }}
-<div class="navbar">
-  <div class="navbar-inner">
-    {{#linkTo "root" classNames="brand"}}Ember.UI{{/linkTo}}
-    <ul class="nav">
-      <li>{{#linkTo "button"}}Button{{/linkTo}}</li>
-      <li>{{#linkTo "buttonGroup"}}Button Group{{/linkTo}}</li>
-      <li>{{#linkTo "navbar"}}Navbar{{/linkTo}}</li>
-      <li>{{#linkTo "progress"}}Progress Bar{{/linkTo}}</li>
-    </ul>
-  </div>
-</div>
+{{#navbar}}
+  {{#linkTo "root" classNames="brand"}}Ember.UI{{/linkTo}}
+  <ul class="nav">
+    <li>{{#linkTo "button"}}Button{{/linkTo}}</li>
+    <li>{{#linkTo "buttonGroup"}}Button Group{{/linkTo}}</li>
+    <li>{{#linkTo "navbar"}}Navbar{{/linkTo}}</li>
+    <li>{{#linkTo "progress"}}Progress Bar{{/linkTo}}</li>
+  </ul>
+{{/navbar}}
 
 {{! Content }}
 <div class="container">
