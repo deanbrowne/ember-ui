@@ -17,7 +17,7 @@ describe('Ember.UI.RadioButtonGroup', function() {
             '{{button value="2"}}' +
             '{{button value="3"}}' +
           '{{/radio-button-group}}'),
-        choice: "3"
+        choice: '3'
       }).create();
 
       Ember.run(function() {
@@ -44,7 +44,7 @@ describe('Ember.UI.RadioButtonGroup', function() {
             '{{button value="1"}}' +
             '{{button value="2"}}' +
           '{{/radio-button-group}}'),
-        choice: "1"
+        choice: '1'
       }).create();
 
       Ember.run(function() {

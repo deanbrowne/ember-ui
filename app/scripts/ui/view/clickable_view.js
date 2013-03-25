@@ -53,7 +53,7 @@ Ember.UI.ClickableView = Ember.View.extend(Ember.TargetActionSupport, {
     @event click
     @override
   */
-  click: function($event) {
+  click: function() {
     // Ember.TargetActionSupport.triggerAction will call the `this.get('action')` method on the
     // `this.get('target')` object.
     this.triggerAction();

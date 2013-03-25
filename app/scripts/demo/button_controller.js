@@ -13,4 +13,5 @@ Demo.ButtonController = Ember.Controller.extend({
   alert: function() {
     alert('Clicked');
   }
+
 });

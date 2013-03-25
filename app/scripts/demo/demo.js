@@ -4,4 +4,4 @@
 
   @namespace
 */
-Demo = Em.Application.create();
+Demo = Ember.Application.create();

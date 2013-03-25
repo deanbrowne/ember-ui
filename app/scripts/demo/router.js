@@ -1,4 +1,4 @@
-Demo.Router = Em.Router.extend();
+Demo.Router = Ember.Router.extend();
 
 Demo.Router.map(function() {
   this.route('root', { path: '/' });
