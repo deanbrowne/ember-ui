@@ -24,7 +24,7 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @property ordering
     @type {'below'|'above'}
   */
-  ordering: 'below',
+  ordering: 'below',  // TODO: enum
 
   /**
     If the panel appears from "left" or "right" side of the screen.
@@ -88,26 +88,70 @@ Ember.UI.Panel = Ember.UI.View.extend({
   }.property('ordering'),
 
 
+  /**
+    Shows the panel.  Moves other content to make space if needed.
+  */
   show: function() {
-    // Set the edge just off the screen.  This happens immediately and will not be animated.
+    var isVisible = this.get('isVisible');
+    if (!isVisible) {
+      var parent = this.get('parentView');
+      var parentWidth = parent.$.width();
+      var width = this.get('width');
+      var origin = this.get('origin');
 
-    // Animate the panel onto the screen.
-    // this.$.css({ translateX: "100px"; });
+      // Set the edge just off the screen.  This happens immediately and will not be animated.
+      var left = origin === 'left' ?
+          -1 * width :
+          parentWidth;
+      this.$.offset({ 'left': left });
 
+      // Animate the panel onto the screen.
+      this.$.css({ translateX: width });
+
+      this.set('isVisible', true);
+    }
   },
 
+  /**
+    Hides the panel.  Other content will typically move to occupy the forfeited space (depending on
+    CSS).
+  */
   hide: function() {
-    // translate -10000,-10000
+    var isVisible = this.get('isVisible');
+    if (isVisible) {
+
+      // translate -10000,-10000
+
+      this.set('isVisible', false);
+    }
   },
 
+  /**
+    Hides the panel if it visible; otherwise shows the panel.
+  */
   toggle: function() {
-
+    var isVisible = this.get('isVisible');
+    if (isVisible) {
+      this.hide();
+    } else {
+      this.show();
+    }
   },
 
-  // Good enough?  Or need to listen to <body>?
-  resize: function() {
+/* Size to parent.  Needs position:fixed to scroll independently from other content.
 
+  didInsertElement: function() {
+    // Set dimensions relative to parent.
+    //var parent = this.get('parentView');
+  },
+
+  resize: function() {
+    // Good enough?  Or need to listen to parent's resize (for scrolling and resizing because this
+    // is fixed and probably doesn't resize
+    // Move relative to parent.
   }
+
+*/
 
 });
 

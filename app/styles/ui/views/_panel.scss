@@ -38,8 +38,12 @@ $uiPanelPushShadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   Main CSS for a panel.
 */
 .ui-panel {
-  // Size and positioning.
-  position: fixed;  // Scroll independently of other panels
+  // Positioning.  Fixed positioning is required to have the panel scroll indepedently of other
+  // content.
+  position: fixed;
+  display: block;
+
+  // Size.
   top: 0;
   left: 0;
   margin: 0;
