@@ -4,8 +4,9 @@
   "url": "https://github.com/deanbrowne/ember-ui",
   "version": "0.0.0",
   "dependencies": {
+    "compass-twitter-bootstrap": "~2.2.2",
     "ember": "~1.0.0",
-    "compass-twitter-bootstrap": "~2.2.2"
+    "jquery.animate-enhanced": "*"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
