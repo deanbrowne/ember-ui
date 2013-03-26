@@ -6,7 +6,7 @@
 
   ```handlebars
   {{#panel id="menu" ordering="below" origin="left" width="240px"}}
-    {{! Menu contents }}
+    {{! Contents }}
   {{/panel}}
   ```
 
@@ -24,7 +24,7 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @property ordering
     @type {'below'|'above'}
   */
-  ordering: 'below',  // TODO: enum
+  ordering: 'below',
 
   /**
     If the panel appears from "left" or "right" side of the screen.
@@ -41,6 +41,14 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @type {String}
   */
   width: '100%',
+
+  /**
+    If the panel is open (visible to the user) or closed (hidden from the user).
+
+    @property open
+    @type {Boolean}
+  */
+  isOpen: false,
 
 
   /**
@@ -91,24 +99,19 @@ Ember.UI.Panel = Ember.UI.View.extend({
   /**
     Shows the panel.  Moves other content to make space if needed.
   */
-  show: function() {
-    var isVisible = this.get('isVisible');
-    if (!isVisible) {
-      var parent = this.get('parentView');
-      var parentWidth = parent.$.width();
-      var width = this.get('width');
-      var origin = this.get('origin');
-
-      // Set the edge just off the screen.  This happens immediately and will not be animated.
-      var left = origin === 'left' ?
-          -1 * width :
-          parentWidth;
-      this.$.offset({ 'left': left });
+  open: function() {  // TODO: Take duration and easing optional parameters
+    var isOpen = this.get('isOpen');
+    if (!isOpen) {
+      // TODO: Really want to be clipping it, not just setting visibilty.
+      // this.$().animate({ 'visibility' : 'visible' }, 0);
 
       // Animate the panel onto the screen.
-      this.$.css({ translateX: width });
+      var width = this.get('width');
+      var props = { 'left': '+=' + width };
+      var durationMs = 200;
+      this.$().animate(props, durationMs);
 
-      this.set('isVisible', true);
+      this.set('isOpen', true);
     }
   },
 
@@ -116,13 +119,16 @@ Ember.UI.Panel = Ember.UI.View.extend({
     Hides the panel.  Other content will typically move to occupy the forfeited space (depending on
     CSS).
   */
-  hide: function() {
-    var isVisible = this.get('isVisible');
-    if (isVisible) {
+  close: function() {
+    var isOpen = this.get('isOpen');
+    if (isOpen) {
+      // Animate the panel off the screen.
+      var width = this.get('width');
+      var props = { 'left': '-=' + width };
+      var durationMs = 200;
+      this.$().animate(props, durationMs);
 
-      // translate -10000,-10000
-
-      this.set('isVisible', false);
+      this.set('isOpen', false);
     }
   },
 
@@ -130,27 +136,81 @@ Ember.UI.Panel = Ember.UI.View.extend({
     Hides the panel if it visible; otherwise shows the panel.
   */
   toggle: function() {
-    var isVisible = this.get('isVisible');
-    if (isVisible) {
-      this.hide();
+    var isOpen = this.get('isOpen');
+    if (isOpen) {
+      this.close();
     } else {
-      this.show();
+      this.open();
     }
   },
 
-/* Size to parent.  Needs position:fixed to scroll independently from other content.
 
-  didInsertElement: function() {
-    // Set dimensions relative to parent.
-    //var parent = this.get('parentView');
+  /**
+    Positions the panel.
+
+    @private
+  */
+  _resetPosition: function() {
+    // This panels positioning properties.
+    var width = this.get('width');
+    var origin = this.get('origin');
+    var isOpen = this.get('isOpen');
+
+    // Parent's positioning.
+    var $parent = this.$().parent();
+
+    var parentOffset = $parent.offset();
+    var parentTop = Math.round(parentOffset.top) + 'px';
+    var parentHeight = $parent.css('height');
+    var parentLeft = parentOffset.left;
+    var parentWidth = $parent.width();
+
+    // Calculate this panel's position.
+    var visibility = isOpen ? 'visible' : 'hidden';
+    var left = origin === 'left' ?
+        parentLeft :
+        parentLeft + parentWidth;
+    left = Math.round(left) + 'px';
+
+    // Align the panel with its parent assuming it is open.
+    this.$().css({
+      'top': parentTop,
+      'height': parentHeight,
+      'left': left,
+      'width': width,
+      // 'visibility': visibility
+    });
+
+    // If the panel is closed, put it in its hidden position.
+    if (!isOpen) {
+      var direction = origin === 'left' ? '-=' : '+=';
+      this.$().animate({
+        'left': direction + width
+      }, 0);
+    }
   },
 
+  /**
+    Set the panel's initial position.
+
+    @override
+  */
+  didInsertElement: function() {
+    this._resetPosition();
+  }
+/*
+  willRemoveElement: function() {
+
+  }
+*/
+/*
   resize: function() {
     // Good enough?  Or need to listen to parent's resize (for scrolling and resizing because this
     // is fixed and probably doesn't resize
     // Move relative to parent.
   }
 
+  // TODO: Show the panel if there is room.  Example on an iPad or desktop might always show.
 */
 
 });

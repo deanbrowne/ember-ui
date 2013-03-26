@@ -11,14 +11,6 @@
 @import "compass/css3/transition";           // @include transition()
 
 
-// GPU animations on iOS.
-@mixin hardware-accelerate-animations() {
-  // iOS 6.0+  http://indiegamr.com/ios6-html-hardware-acceleration-changes-and-how-to-fix-them/
-  -webkit-transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-}
-
-
 /*
   Configurable appearance.
 */
@@ -41,25 +33,15 @@ $uiPanelPushShadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   // Positioning.  Fixed positioning is required to have the panel scroll indepedently of other
   // content.
   position: fixed;
-  display: block;
 
   // Size.
-  top: 0;
-  left: 0;
   margin: 0;
-  min-height: 100%;
 
   // Avoid accidentally floating elements over panels.
   z-index: $zindexFixedNavbar + 1;
 
   // Appearance.
   background-color: $wellBackground;
-
-  // Animations to slide panel.
-  @include hardware-accelerate-animations();
-  @include transition-duration($uiPanelAnimationDuration);
-  @include transition-timing-function($uiPanelAnimationTiming);
-  @include transition-property(transform);
 
   /**
     For panels with `depth` of "below".
