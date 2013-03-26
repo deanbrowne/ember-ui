@@ -18,11 +18,10 @@
 <h3></h3>
 <div class="well">
   <div style="width:100%; height:70px; background:#FFF;">
-    {{#panel id="panel" ordering="below" origin="left" width="240px" style="background:#00F"}}
-      &nbsp;
+    {{#panel id="panel" ordering="below" origin="left" width="240px" style="background:#32394A"}}
     {{/panel}}
   </div>
-  <div class="pull-right">
+  <div style="margin-top: 20px">
     {{#button appearance="primary" action="toggle" target="controller"}}Toggle{{/button}}
   </div>
 </div>
@@ -31,3 +30,9 @@
 <pre>&#123;&#123;#panel&#125;&#125;
   ... Content goes here ...
 &#123;&#123;/panel&#125;&#125;</pre>
+
+{{! Example above should have each of 4 panel types }}
+
+{{! Methods:  open, close, toggle }}
+
+{{! CSS override }}

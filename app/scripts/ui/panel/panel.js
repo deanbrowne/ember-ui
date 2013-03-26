@@ -76,7 +76,7 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_orderingCss'],
+  classNameBindings: ['_borderCss'],
 
   /**
     The `style` attribute used in addition to `classNames`.
@@ -90,57 +90,113 @@ Ember.UI.Panel = Ember.UI.View.extend({
     return vals.join(';');
   }.property('width'),
 
-  _orderingCss: function() {
+  _borderCss: function() {
     var ordering = this.get('ordering');
-    return 'ui-panel-' + ordering;
-  }.property('ordering'),
+    var origin = this.get('origin');
+    return 'ui-panel-' + ordering + '-' + origin;
+  }.property('ordering', 'origin'),
 
 
   /**
-    Shows the panel.  Moves other content to make space if needed.
+    Default length of the panel sliding animation in milliseconds.
+
+    @const
+    @type {Number}
+    @private
   */
-  open: function() {  // TODO: Take duration and easing optional parameters
+  _DEFAULT_ANIMATION_DURATION: 200,
+
+  /**
+    Default panel sliding animation easing function.
+
+    @const
+    @type {String}
+    @private
+  */
+  _DEFAULT_ANIMATION_EASING: 'swing',
+
+  /**
+    Flag to prevent opening/closing while an animation is in progress.  The math involved assumes
+    the panel is fully open or closed so doing something mid-animation will offset the panel from
+    where it is expected to be.
+
+    @type {Boolean}
+    @private
+  */
+  _isAnimating: false,
+
+  /**
+    Shows the panel.  Moves other content to make space if needed.
+
+    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {String} easing is an optional parameter defining the easing function for the animation.
+        The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
+        (http://jqueryui.com/resources/demos/effect/easing.html).
+  */
+  open: function(duration, easing) {
     var isOpen = this.get('isOpen');
-    if (!isOpen) {
-      // TODO: Really want to be clipping it, not just setting visibilty.
-      // this.$().animate({ 'visibility' : 'visible' }, 0);
+    if (!isOpen && !this._isAnimating) {
+      this.set('isOpen', true);
 
       // Animate the panel onto the screen.
       var width = this.get('width');
       var props = { 'left': '+=' + width };
-      var durationMs = 200;
-      this.$().animate(props, durationMs);
+      duration = duration || this._DEFAULT_ANIMATION_DURATION;
+      easing = easing || this._DEFAULT_ANIMATION_EASING;
 
-      this.set('isOpen', true);
+      var me = this;
+      this._isAnimating = true;
+
+      this.$().animate(props, duration, easing, function() {
+        me._isAnimating = false;
+      });
+
+      // TODO: Push your siblings
     }
   },
 
   /**
     Hides the panel.  Other content will typically move to occupy the forfeited space (depending on
     CSS).
+
+    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {String} easing is an optional parameter defining the easing function for the animation.
+        The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
+        (http://jqueryui.com/resources/demos/effect/easing.html).
   */
-  close: function() {
+  close: function(duration, easing) {
     var isOpen = this.get('isOpen');
-    if (isOpen) {
+    if (isOpen && !this._isAnimating) {
+      this.set('isOpen', false);
+
       // Animate the panel off the screen.
       var width = this.get('width');
       var props = { 'left': '-=' + width };
-      var durationMs = 200;
-      this.$().animate(props, durationMs);
+      duration = duration || this._DEFAULT_ANIMATION_DURATION;
+      easing = easing || this._DEFAULT_ANIMATION_EASING;
 
-      this.set('isOpen', false);
+      var me = this;
+      this._isAnimating = true;
+      this.$().animate(props, duration, easing, function() {
+        me._isAnimating = false;
+      });
     }
   },
 
   /**
     Hides the panel if it visible; otherwise shows the panel.
+
+    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {String} easing is an optional parameter defining the easing function for the animation.
+        The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
+        (http://jqueryui.com/resources/demos/effect/easing.html).
   */
-  toggle: function() {
+  toggle: function(duration, easing) {
     var isOpen = this.get('isOpen');
     if (isOpen) {
-      this.close();
+      this.close(duration, easing);
     } else {
-      this.open();
+      this.open(duration, easing);
     }
   },
 
@@ -156,29 +212,14 @@ Ember.UI.Panel = Ember.UI.View.extend({
     var origin = this.get('origin');
     var isOpen = this.get('isOpen');
 
-    // Parent's positioning.
-    var $parent = this.$().parent();
-
-    var parentOffset = $parent.offset();
-    var parentTop = Math.round(parentOffset.top) + 'px';
-    var parentHeight = $parent.css('height');
-    var parentLeft = parentOffset.left;
-    var parentWidth = $parent.width();
-
     // Calculate this panel's position.
-    var visibility = isOpen ? 'visible' : 'hidden';
-    var left = origin === 'left' ?
-        parentLeft :
-        parentLeft + parentWidth;
-    left = Math.round(left) + 'px';
+    var $parent = this.$().parent();
+    var left = origin === 'left' ? 0 : $parent.css('width');
 
     // Align the panel with its parent assuming it is open.
     this.$().css({
-      'top': parentTop,
-      'height': parentHeight,
       'left': left,
-      'width': width,
-      // 'visibility': visibility
+      'width': width
     });
 
     // If the panel is closed, put it in its hidden position.
@@ -197,21 +238,16 @@ Ember.UI.Panel = Ember.UI.View.extend({
   */
   didInsertElement: function() {
     this._resetPosition();
-  }
-/*
-  willRemoveElement: function() {
 
+// TODO: Want some kind of "panel container" parent that we know has these properties.  Also has
+// a shadow like our main container on the app.
+    // Parent element must mask this child.
+    var $parent = this.$().parent();
+    $parent.css({
+      'overflow': 'hidden',
+      'position': 'relative'
+    });
   }
-*/
-/*
-  resize: function() {
-    // Good enough?  Or need to listen to parent's resize (for scrolling and resizing because this
-    // is fixed and probably doesn't resize
-    // Move relative to parent.
-  }
-
-  // TODO: Show the panel if there is room.  Example on an iPad or desktop might always show.
-*/
 
 });
 

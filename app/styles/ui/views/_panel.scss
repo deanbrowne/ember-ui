@@ -15,45 +15,57 @@
   Configurable appearance.
 */
 
-// How long the slide animation takes.
-$uiPanelAnimationDuration: 200ms;
-$uiPanelAnimationTiming: ease;
+// Shadows to give the illusion of having higher/lower Z-indexes.  For example a panel that appears
+// to be below its sibling and coming from the left would have a shadow like:
+// box-shadow: inset -1px 0px 3px 0px rgba(0, 0, 0, 0.4);
+$uiShadowHorizontalLength: 1px;
+$uiShadowVerticalLength: 0px;
+$uiShadowBlurRadius: 3px;
+$uiShadowSpread: 0px;
+$uiShadowColor: rgba(0, 0, 0, 0.4);
 
 // Drop shadow inset to give the illusion of a revealed panel having a lower Z-index.
-$uiPanelRevealShadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+// TODO: Most awesome shadows ever
+//$uiPanelRevealShadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+$uiPanelShadowBelow: inset -1px 0 3px rgba(0, 0, 0, 0.4);
 
 // Drop shadow to give the illusion of a pushed panel having a higher Z-index.
-$uiPanelPushShadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+$uiPanelShadowAbove: 1px 1px 3px rgba(0, 0, 0, 0.4);
 
 
 /**
   Main CSS for a panel.
 */
 .ui-panel {
-  // Positioning.  Fixed positioning is required to have the panel scroll indepedently of other
-  // content.
-  position: fixed;
-
-  // Size.
+  // Positioning.  Absolute positioning is better than fixed for a couple reasons.  Absolute is
+  // required to have the parent clip the panel using overflow:hidden.  Second fixed positioning
+  // still has a lot of quirks on mobile (especially Android's WebView).  The benefit of fixed
+  // positioning is the panel content scrolls independently of the document.
+  position: absolute;
   margin: 0;
-
-  // Avoid accidentally floating elements over panels.
-  z-index: $zindexFixedNavbar + 1;
+  top: 0;
+  height: 100%;
 
   // Appearance.
   background-color: $wellBackground;
+}
 
-  /**
-    For panels with `depth` of "below".
-  */
-  .ui-panel-below {
-    @include box-shadow($uiPanelRevealShadow);
-  }
+.ui-panel-below-left {
+  @include box-shadow(inset -$uiShadowHorizontalLength $uiShadowVerticalLength
+                      $uiShadowBlurRadius $uiShadowSpread $uiShadowColor);
+}
 
-  /**
-    For panels with `depth` of "above".
-  */
-  .ui-panel-above {
-    @include box-shadow($uiPanelPushShadow);
-  }
+.ui-panel-below-right {
+  @include box-shadow(inset $uiShadowHorizontalLength $uiShadowVerticalLength
+                      $uiShadowBlurRadius $uiShadowSpread $uiShadowColor);
+}
+
+.ui-panel-above-left {
+  @include box-shadow(-$uiShadowHorizontalLength $uiShadowVerticalLength
+                      $uiShadowBlurRadius $uiShadowSpread $uiShadowColor);
+}
+
+.ui-panel-above-right {
+  @include box-shadow($uiShadowHorizontalLength $uiShadowVerticalLength
+                      $uiShadowBlurRadius $uiShadowSpread $uiShadowColor);
 }
