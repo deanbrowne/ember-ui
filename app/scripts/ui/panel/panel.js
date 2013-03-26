@@ -1,11 +1,10 @@
 /**
-  Panels are containers for other views.  A panel is a column 100% the height of its parent.  Panels
-  can slide under or over other content.  Applications are often composed of a number of panels: a
-  menu panel on the left that others slide on top of, a main panel area for the content, and
-  auxilary panels for lists, etc.
+  Panels are containers for other views.  A panel is a column, 100% the height of its parent, that
+  slides under or over other content.  Typical use cases are left-side menus and right-side property
+  panels.
 
   ```handlebars
-  {{#panel id="menu" ordering="below" origin="left" width="240px"}}
+  {{#panel id="menu" ordering="above" origin="right" width="240px"}}
     {{! Contents }}
   {{/panel}}
   ```
@@ -98,24 +97,6 @@ Ember.UI.Panel = Ember.UI.View.extend({
 
 
   /**
-    Default length of the panel sliding animation in milliseconds.
-
-    @const
-    @type {Number}
-    @private
-  */
-  _DEFAULT_ANIMATION_DURATION: 200,
-
-  /**
-    Default panel sliding animation easing function.
-
-    @const
-    @type {String}
-    @private
-  */
-  _DEFAULT_ANIMATION_EASING: 'swing',
-
-  /**
     Flag to prevent opening/closing while an animation is in progress.  The math involved assumes
     the panel is fully open or closed so doing something mid-animation will offset the panel from
     where it is expected to be.
@@ -124,6 +105,41 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @private
   */
   _isAnimating: false,
+
+  /**
+    Animates the panel to the left or right.
+
+    @param {Boolean} animateToRight slides everything to the right or left.
+    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {String} easing is an optional parameter defining the easing function for the animation.
+        The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
+        (http://jqueryui.com/resources/demos/effect/easing.html).
+    @private
+  */
+  _animate: function(animateToRight, duration, easing) {
+    // Animate the panel onto the screen.
+    var direction = animateToRight ? '+=' : '-=';
+    var width = this.get('width');
+
+    var props = { 'left': direction + width };
+    duration = duration || 200;
+    easing = easing || 'swing';
+
+    var me = this;
+    this._isAnimating = true;
+    this.$().animate(props, duration, easing, function() {
+      me._isAnimating = false;
+    });
+
+    // Move siblings.
+    var origin = this.get('origin');
+    var isLeft = origin === 'left';
+    if (isLeft) {
+      this.$().nextAll().animate(props, duration, easing);
+    } else {
+      this.$().prevAll().animate(props, duration, easing);
+    }
+  },
 
   /**
     Shows the panel.  Moves other content to make space if needed.
@@ -139,19 +155,9 @@ Ember.UI.Panel = Ember.UI.View.extend({
       this.set('isOpen', true);
 
       // Animate the panel onto the screen.
-      var width = this.get('width');
-      var props = { 'left': '+=' + width };
-      duration = duration || this._DEFAULT_ANIMATION_DURATION;
-      easing = easing || this._DEFAULT_ANIMATION_EASING;
-
-      var me = this;
-      this._isAnimating = true;
-
-      this.$().animate(props, duration, easing, function() {
-        me._isAnimating = false;
-      });
-
-      // TODO: Push your siblings
+      var origin = this.get('origin');
+      var isLeft = origin === 'left';
+      this._animate(isLeft, duration, easing);
     }
   },
 
@@ -170,16 +176,9 @@ Ember.UI.Panel = Ember.UI.View.extend({
       this.set('isOpen', false);
 
       // Animate the panel off the screen.
-      var width = this.get('width');
-      var props = { 'left': '-=' + width };
-      duration = duration || this._DEFAULT_ANIMATION_DURATION;
-      easing = easing || this._DEFAULT_ANIMATION_EASING;
-
-      var me = this;
-      this._isAnimating = true;
-      this.$().animate(props, duration, easing, function() {
-        me._isAnimating = false;
-      });
+      var origin = this.get('origin');
+      var isLeft = origin === 'left';
+      this._animate(!isLeft, duration, easing);
     }
   },
 
@@ -210,11 +209,12 @@ Ember.UI.Panel = Ember.UI.View.extend({
     // This panels positioning properties.
     var width = this.get('width');
     var origin = this.get('origin');
+    var isLeft = origin === 'left';
     var isOpen = this.get('isOpen');
 
     // Calculate this panel's position.
     var $parent = this.$().parent();
-    var left = origin === 'left' ? 0 : $parent.css('width');
+    var left = isLeft ? 0 : $parent.css('width');
 
     // Align the panel with its parent assuming it is open.
     this.$().css({
@@ -224,7 +224,7 @@ Ember.UI.Panel = Ember.UI.View.extend({
 
     // If the panel is closed, put it in its hidden position.
     if (!isOpen) {
-      var direction = origin === 'left' ? '-=' : '+=';
+      var direction = isLeft ? '-=' : '+=';
       this.$().animate({
         'left': direction + width
       }, 0);
@@ -239,8 +239,6 @@ Ember.UI.Panel = Ember.UI.View.extend({
   didInsertElement: function() {
     this._resetPosition();
 
-// TODO: Want some kind of "panel container" parent that we know has these properties.  Also has
-// a shadow like our main container on the app.
     // Parent element must mask this child.
     var $parent = this.$().parent();
     $parent.css({

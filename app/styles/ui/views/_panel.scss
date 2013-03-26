@@ -42,9 +42,11 @@ $uiPanelShadowAbove: 1px 1px 3px rgba(0, 0, 0, 0.4);
   // still has a lot of quirks on mobile (especially Android's WebView).  The benefit of fixed
   // positioning is the panel content scrolls independently of the document.
   position: absolute;
+  display: inline-block;
   margin: 0;
   top: 0;
   height: 100%;
+  width: 320px;  // Default width of a panel
 
   // Appearance.
   background-color: $wellBackground;
