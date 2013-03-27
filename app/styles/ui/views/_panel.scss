@@ -17,12 +17,12 @@
 
 // Shadows to give the illusion of having higher/lower Z-indexes.  For example a panel that appears
 // to be below its sibling and coming from the left would have a shadow like:
-// box-shadow: inset -1px 0 3px 0 rgba(0, 0, 0, 0.8);
+// box-shadow: inset -1px 0 3px 0 rgba(0, 0, 0, 0.4);
 $uiShadowHorizontalLength: 1px;
 $uiShadowVerticalLength: 0;
 $uiShadowBlurRadius: 3px;
 $uiShadowSpread: 0;
-$uiShadowColor: rgba(0, 0, 0, 0.8);
+$uiShadowColor: rgba(0, 0, 0, 0.4);
 
 
 /**
@@ -39,7 +39,6 @@ $uiShadowColor: rgba(0, 0, 0, 0.8);
   top: 0;
   height: 100%;
   width: 320px;  // Default width of a panel
-  max-width: 100%;  // A panel is never wider than the screen
 
   // Appearance.
   background-color: $wellBackground;

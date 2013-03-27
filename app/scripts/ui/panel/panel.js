@@ -4,7 +4,7 @@
   panels.
 
   ```handlebars
-  {{#panel id="menu" ordering="above" origin="right" width="240px"}}
+  {{#panel id="menu" depth="above" origin="right" width="240px"}}
     {{! Contents }}
   {{/panel}}
   ```
@@ -16,14 +16,15 @@
 Ember.UI.Panel = Ember.UI.View.extend({
 
   /**
-    The type of panel:
-      * 'below' appears beneath other content (default)
+    Provides illusion of depth to the panel by applying drop shadows:
+      * (default) 'below' appears beneath other content
       * 'above' appears over other content
+      * 'level' appears at the same level as other content (no drop shadow)
 
-    @property ordering
-    @type {'below'|'above'}
+    @property depth
+    @type {'below'|'above'|'level'}
   */
-  ordering: 'below',
+  depth: 'below',
 
   /**
     If the panel appears from "left" or "right" side of the screen.
@@ -79,10 +80,10 @@ Ember.UI.Panel = Ember.UI.View.extend({
   classNameBindings: ['_borderCss', '_hiddenCss'],
 
   _borderCss: function() {
-    var ordering = this.get('ordering');
+    var depth = this.get('depth');
     var origin = this.get('origin');
-    return 'ui-panel-' + ordering + '-' + origin;
-  }.property('ordering', 'origin'),
+    return 'ui-panel-' + depth + '-' + origin;
+  }.property('depth', 'origin'),
 
   _hiddenCss: function() {
     var isOpen = this.get('isOpen');
@@ -118,7 +119,7 @@ Ember.UI.Panel = Ember.UI.View.extend({
     var width = Math.round(this.$().width()) + 'px';
 
     var props = { 'left': direction + width };
-    duration = duration || 200;
+    duration = isNaN(duration) ? 200 : duration;
     easing = easing || 'swing';
 
     var me = this;
@@ -233,6 +234,15 @@ Ember.UI.Panel = Ember.UI.View.extend({
       this.$().animate({
         'left': '-=' + width
       }, 0);
+    }
+
+    // A panel can never be wider than the screen.  This helps keep panels usable on phones.
+    // Ideally we'd use the max-width CSS property to handle this but it is ignored for absolutely
+    // positioned elements.
+    if (this.$().width() > $parent.width()) {
+      this.$().css({
+        'width': parentWidth
+      });
     }
   },
 
