@@ -245,7 +245,7 @@ if ('ontouchstart' in window) {
   Ember.UI.ClickableView.ClickBuster.preventGhostClick = function(x, y) {
     Ember.UI.ClickableView.ClickBuster.coordinates.push(x, y);
     window.setTimeout(Ember.UI.ClickableView.ClickBuster.pop,
-                      Ember.UI.ClickableView.TOUCHMOVE_TOLERANCE);
+                      Ember.UI.ClickableView.GHOST_CLICK_MONITOR);
   };
 
   Ember.UI.ClickableView.ClickBuster.pop = function() {
