@@ -34,12 +34,13 @@ Ember.UI.Panel = Ember.UI.View.extend({
   origin: 'left',
 
   /**
-    The width of the panel as a CSS value like '320px' or '10%'.
+    The width of the panel as a CSS value like '320px' (the default) or '10%'.  Panels are never
+    wider than 100% of their parent so test big values on mobile devices which constrict the width.
 
     @property width
     @type {String}
   */
-  width: '100%',
+  width: '320px',
 
   /**
     If the panel is open (visible to the user) or closed (hidden from the user).
@@ -75,25 +76,18 @@ Ember.UI.Panel = Ember.UI.View.extend({
     @type {Array[String]}
     @override
   */
-  classNameBindings: ['_borderCss'],
-
-  /**
-    The `style` attribute used in addition to `classNames`.
-
-    @property style
-    @type {String}
-  */
-  style: function() {
-    var vals = [];
-    vals.pushObject('width:' + this.get('width'));
-    return vals.join(';');
-  }.property('width'),
+  classNameBindings: ['_borderCss', '_hiddenCss'],
 
   _borderCss: function() {
     var ordering = this.get('ordering');
     var origin = this.get('origin');
     return 'ui-panel-' + ordering + '-' + origin;
   }.property('ordering', 'origin'),
+
+  _hiddenCss: function() {
+    var isOpen = this.get('isOpen');
+    return isOpen ? null : 'ui-panel-hidden';
+  }.property('isOpen'),
 
 
   /**
@@ -110,16 +104,18 @@ Ember.UI.Panel = Ember.UI.View.extend({
     Animates the panel to the left or right.
 
     @param {Boolean} animateToRight slides everything to the right or left.
-    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {Number} duration is an optional parameter for the length of the panel slide animation
+        in milliseconds.  The default is 200 (milliseconds).
     @param {String} easing is an optional parameter defining the easing function for the animation.
         The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
         (http://jqueryui.com/resources/demos/effect/easing.html).
+    @param {Function} callbackFn is an optional function called after the animation completes.
     @private
   */
-  _animate: function(animateToRight, duration, easing) {
+  _animate: function(animateToRight, duration, easing, callbackFn) {
     // Animate the panel onto the screen.
     var direction = animateToRight ? '+=' : '-=';
-    var width = this.get('width');
+    var width = Math.round(this.$().width()) + 'px';
 
     var props = { 'left': direction + width };
     duration = duration || 200;
@@ -129,22 +125,27 @@ Ember.UI.Panel = Ember.UI.View.extend({
     this._isAnimating = true;
     this.$().animate(props, duration, easing, function() {
       me._isAnimating = false;
+
+      if (callbackFn) {
+        callbackFn();
+      }
     });
 
-    // Move siblings.
+    // Move siblings that are not other panels.
     var origin = this.get('origin');
     var isLeft = origin === 'left';
     if (isLeft) {
-      this.$().nextAll().animate(props, duration, easing);
+      this.$().nextAll(':not(.ui-panel)').animate(props, duration, easing);
     } else {
-      this.$().prevAll().animate(props, duration, easing);
+      this.$().prevAll(':not(.ui-panel)').animate(props, duration, easing);
     }
   },
 
   /**
     Shows the panel.  Moves other content to make space if needed.
 
-    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {Number} duration is an optional parameter for the length of the panel slide animation
+        in milliseconds.  The default is 200 (milliseconds).
     @param {String} easing is an optional parameter defining the easing function for the animation.
         The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
         (http://jqueryui.com/resources/demos/effect/easing.html).
@@ -165,7 +166,8 @@ Ember.UI.Panel = Ember.UI.View.extend({
     Hides the panel.  Other content will typically move to occupy the forfeited space (depending on
     CSS).
 
-    @param {Number} duration is an optional parameter for the length of the panel slide animation.
+    @param {Number} duration is an optional parameter for the length of the panel slide animation
+        in milliseconds.  The default is 200 (milliseconds).
     @param {String} easing is an optional parameter defining the easing function for the animation.
         The default is 'swing', 'linear' is possible, [others are available with jQuery UI]
         (http://jqueryui.com/resources/demos/effect/easing.html).
@@ -173,12 +175,13 @@ Ember.UI.Panel = Ember.UI.View.extend({
   close: function(duration, easing) {
     var isOpen = this.get('isOpen');
     if (isOpen && !this._isAnimating) {
-      this.set('isOpen', false);
-
       // Animate the panel off the screen.
       var origin = this.get('origin');
       var isLeft = origin === 'left';
-      this._animate(!isLeft, duration, easing);
+      var me = this;
+      this._animate(!isLeft, duration, easing, function() {
+        me.set('isOpen', false);
+      });
     }
   },
 
@@ -214,7 +217,8 @@ Ember.UI.Panel = Ember.UI.View.extend({
 
     // Calculate this panel's position.
     var $parent = this.$().parent();
-    var left = isLeft ? 0 : $parent.css('width');
+    var parentWidth = $parent.css('width');
+    var left = isLeft ? 0 : parentWidth;
 
     // Align the panel with its parent assuming it is open.
     this.$().css({
@@ -222,11 +226,12 @@ Ember.UI.Panel = Ember.UI.View.extend({
       'width': width
     });
 
-    // If the panel is closed, put it in its hidden position.
-    if (!isOpen) {
-      var direction = isLeft ? '-=' : '+=';
+    // Move the panel if needed.
+    var isClosedOnLeft = !isOpen && isLeft;
+    var isOpenOnRight = isOpen && !isLeft;
+    if (isClosedOnLeft || isOpenOnRight) {
       this.$().animate({
-        'left': direction + width
+        'left': '-=' + width
       }, 0);
     }
   },

@@ -7,35 +7,113 @@
   </h1>
 </div>
 <p>
-  Panels are containers for other views.  A panel is a column 100% the height of its
-  parent.  Panels can slide under or over other content.  Applications are often composed of a
-  number of panels: a menu panel on the left that others slide on top of, a main panel area for the
-  content, and auxilary panels for lists, etc.
+  Panels are containers for other views.  A panel is a column, 100% the height of its parent, that
+  slides under or over other content.  Typical use cases are left-side menus and right-side property
+  panels.
 </p>
 
 
 <hr />
-<h3></h3>
+<h3>Appearance</h3>
+
+<h4>Origin and Ordering</h4>
 <div class="well">
   <div style="width:100%; height:40px; background:#FFF;">
-    {{#panel id="panel" ordering="below" origin="left" width="240px" style="background:#32394A"}}
+    {{#panel id="panelLeft" ordering="below" origin="left" width="240px" style="background:#62c462"}}
     {{/panel}}
-    <div style="display:inline-block; margin:0; position:absolute;">
-      <img src="http://www.beer100.com/images/beermug.jpg" style="height:100%"></img>
+    <div style="display:inline-block; position:absolute; width:100%; text-align:center;">
+      <img style="height:100%;" src="data:image/jpg;base64,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"></img>
     </div>
+    {{#panel id="panelRight" ordering="above" origin="right" width="240px" style="background:#ee5f5b"}}
+    {{/panel}}
   </div>
-  <div style="margin-top: 20px">
-    {{#button appearance="primary" action="toggle" target="controller"}}Toggle{{/button}}
+  <div style="margin-top:20px;">
+    {{#button appearance="success" action="toggleLeft" target="controller"}}Toggle Left{{/button}}
+    {{#button appearance="danger" action="toggleRight" target="controller"}}Toggle Right{{/button}}
   </div>
 </div>
-
-<p></p>
-<pre>&#123;&#123;#panel&#125;&#125;
+<p>
+  By default panels appear from the left side of the screen and seem below other content.  The other
+  common appearance is to set the <code>origin</code> to "right" and <code>ordering</code> to
+  "above" so the panel slides from other side of the screen appearing above the main content.  These
+  are the examples above.
+</p>
+<pre>&#123;&#123;#panel origin="right" ordering="above"&#125;&#125;
   ... Content goes here ...
 &#123;&#123;/panel&#125;&#125;</pre>
+<br/>
 
-{{! Example above should have each of 4 panel types }}
+<h4>Width</h4>
+<div class="well">
+  <div style="width:100%; height:40px; background:#FFF;">
+    {{#panel id="panel100" width="100%" style="background:#32394A"}}
+    {{/panel}}
+  </div>
+  <div style="margin-top:20px;">
+    {{#button appearance="primary" action="toggle100" target="controller"}}Toggle 100%{{/button}}
+  </div>
+</div>
+<p>
+  The <code>width</code> property's default is "320px".  It can be set to a desired width, however,
+  panels are never wider than the screen so make sure to test large values on mobile devices.
+</p>
+<pre>&#123;&#123;#panel width="100%"&#125;&#125;...&#123;&#123;/panel&#125;&#125;</pre>
+<br/>
 
-{{! Methods:  open, close, toggle }}
+<h4>isOpen</h4>
+<div class="well">
+  <div style="width:100%; height:40px; background:#FFF;">
+    {{#panel isOpen="true" style="background:#32394A"}}
+    {{/panel}}
+  </div>
+</div>
+<p>
+  Panels are closed by default but that can be changed with the <code>isOpen</code> property.
+</p>
+<pre>&#123;&#123;#panel isOpen="true"&#125;&#125;...&#123;&#123;/panel&#125;&#125;</pre>
 
-{{! CSS override }}
+
+<hr />
+<h3>Methods</h3>
+<ul>
+  <li>
+    <code>open([duration], [easing])</code>
+    Shows the panel.  Moves other content to make space if needed.
+    <ul>
+      <li class="unstyled">
+        <code>duration</code> is an optional parameter for the length of the panel slide animation
+        in milliseconds.  The default is 200 (milliseconds).
+      </li>
+      <li>
+        <code>easing</code> is an optional parameter defining the easing function for the animation.
+        The default is 'swing', 'linear' is possible,
+        <a href="http://jqueryui.com/resources/demos/effect/easing.html">others are available with
+        jQuery UI</a>.
+      </li>
+    </ul>
+  </li>
+  <li>
+    <code>close([duration], [easing])</code>
+    Hides the panel.  Other content will typically move to occupy the forfeited space (depending on
+    CSS).
+  </li>
+  <li>
+    <code>toggle([duration], [easing])</code>
+    Hides the panel if it visible; otherwise shows the panel.
+  </li>
+</ul>
+<br/>
+
+<h4>Example</h4>
+<p>
+  Adding a close button on a panel:
+</p>
+<pre>&#123;&#123;#panel id="menuPanel"&#125;&#125;
+  ...
+  &#123;&#123;#button action="close" target="controller"&#125;&#125;Close&#123;&#123;/button&#125;&#125;
+  ...
+&#123;&#123;/panel&#125;&#125;</pre>
+<pre>close: function() {
+  var menuPanel = Ember.View.views['menuPanel'];
+  menuPanel.close();
+}</pre>
