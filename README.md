@@ -1,3 +1,12 @@
+----
+# WARNING
+
+> **Ember.UI is very raw.**  The goal is a first release of alpha-quality shortly after [Bootstrap 3.0](https://github.com/twitter/bootstrap/wiki/Roadmap)
+releases.
+
+----
+
+
 # Ember.UI
 
 Library of basic views for Ember including buttons, lists, navigation elements, etc.  The goal of
@@ -15,6 +24,13 @@ Ember.UI is:
 
 Ember.UI is loosely modeled after [iOS's UIKit](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/Introduction/Introduction.html).  It
 works on iOS and Android just as well as it does on desktop.
+
+
+## Platform Support
+
+Designed to work on modern browsers, touch devcies, and IE 9+.  _IE 8 is not supported._
+
+Active testing happens on iOS, Android (2.3 and 4), and Chrome.
 
 
 ## Setup
@@ -62,7 +78,7 @@ grunt server:test
 
 1. Produce a production build which runs jshint, the tests, etc.  It must pass cleanly.
 
-    ```console
+    ```bash
     grunt
     ```
 
