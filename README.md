@@ -1,8 +1,7 @@
 ----
 # WARNING
 
-> **Ember.UI is very raw.**  The goal is a first release of alpha-quality shortly after [Bootstrap 3.0](https://github.com/twitter/bootstrap/wiki/Roadmap)
-releases.
+> **Ember.UI is not actively being developed.**  Many of these features have been picked up in Ember v1.0 and other frameworks.
 
 ----
 
