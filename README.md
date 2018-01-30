@@ -100,7 +100,7 @@ the library better for you and me!
   * Toolchain
     * [Yeoman](http://yeoman.io/) - Original scaffolding
     * [Grunt](http://gruntjs.com/) - Building
-    * [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) - Testing
+    * [Mocha](http://mochajs.org/) and [Chai](http://chaijs.com/) - Testing
     * [Bower](http://twitter.github.com/bower/) - Package manager
     * [SASS](http://sass-lang.com/) and [Compass](http://compass-style.org/reference/compass/) - CSS
   * Libraries
